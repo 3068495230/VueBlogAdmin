@@ -1,28 +1,138 @@
+/*
+ * @Description: 文件描述
+ * @Author: CY小尘s
+ * @Date: 2021-04-11 17:46:07
+ * @LastEditTime: 2021-04-16 09:41:50
+ * @LastEditors: 学习
+ */
 import Vue from "vue";
 import VueRouter from "vue-router";
-import Home from "../views/Home.vue";
+import Login from "../views/Login.vue";
+import Home from "../views/Home.vue"
 
 Vue.use(VueRouter);
 
 const routes = [
+  // 默认页面
   {
     path: "/",
-    name: "Home",
-    component: Home,
+    component: Home
   },
+  // 登录页
   {
-    path: "/about",
-    name: "About",
-    // route level code-splitting
-    // this generates a separate chunk (about.[hash].js) for this route
-    // which is lazy-loaded when the route is visited.
-    component: () =>
-      import(/* webpackChunkName: "about" */ "../views/About.vue"),
+    path: "/login",
+    name: "login",
+    component: Login
+  },
+  // 后台首页
+  {
+    path: "/home",
+    name: "home",
+    component: Home,
+    // 后台子页
+    children: [
+      {
+        path: 'index',
+        name: 'index',
+        meta: {
+          title: '首页'
+        },
+        component: () => import('../components/Index.vue')
+      },
+      // 用户管理页
+      {
+        path: 'user',
+        name: 'user',
+        meta: {
+          title: '用户管理'
+        },
+        component: () => import('../components/user/userList.vue'),
+        // 用户列表、添加页
+        children: [
+          {
+            path: 'userList',
+            name: 'userList',
+            meta: {
+              title: '用户列表'
+            },
+            component: () => import('../components/user/userList.vue'),
+          },
+          {
+            path: 'userAdd',
+            name: 'userAdd',
+            meta: {
+              title: '用户添加'
+            },
+            component: () => import('../components/user/userAdd.vue'),
+          }
+        ],
+      },
+      // 文章管理页
+      {
+        path: 'blog',
+        name: 'blog',
+        meta: {
+          title: '文章管理'
+        },
+        component: () => import('../components/blog/blogList.vue'),
+        // 文章列表、添加页
+        children: [
+          {
+            path: 'blogList',
+            name: 'blogList',
+            meta: {
+              title: '文章列表'
+            },
+            component: () => import('../components/blog/blogList.vue')
+          },
+          {
+            path: 'blogAdd',
+            name: 'blogAdd',
+            meta: {
+              title: '文章添加'
+            },
+            component: () => import('../components/blog/blogAdd.vue')
+          }
+        ]
+      },
+      // 分类管理页
+      {
+        path: 'classfiy',
+        name: 'classfiy',
+        meta: {
+          title: '分类管理'
+        },
+        component: () => import('../components/Classfiy.vue')
+      },
+      // 账户安全页
+      {
+        path: 'security',
+        name: 'security',
+        meta: {
+          title: '账户安全'
+        },
+        component: () => import('../components/Security.vue')
+      }
+    ]
   },
 ];
 
 const router = new VueRouter({
   routes,
 });
+
+// 路由拦截
+router.beforeEach((to, from, next) => {
+  // 判断是否没有 本地登录信息，用户是否没有保持着登录状态
+  if(!sessionStorage.getItem('username')){
+    // 地址不是 login 时跳转到 login 中
+    if(to.path !== '/login'){
+      alert('未登录！')
+      next('/login')
+    }
+  }
+  // 继续跳转
+  next()
+})
 
 export default router;
