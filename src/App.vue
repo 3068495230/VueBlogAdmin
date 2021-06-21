@@ -17,7 +17,7 @@ export default {
 }
 </script>
 
-<style lang="less" scoped>
+<style>
 *{
   margin: 0px;
   padding: 0px;
@@ -27,4 +27,7 @@ export default {
   width: 100%;
   height: 100vh;
 }
+.active:focus{
+    color: red;
+  }
 </style>

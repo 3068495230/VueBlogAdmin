@@ -33,6 +33,101 @@ export default {
 }
 </script>
 
-<style>
-
+<style lang="less" scoped>
+// 导航栏列表项
+.navItem{
+  background-color: #354153;
+  // 无子级项
+  .el-menu-item{
+    // icon
+    i, span{
+        color: white;
+    }
+  }
+  // 有子级项
+  .el-submenu{
+    .el-submenu__title{
+      i, span{
+        color: white;
+      }
+    }
+  }
+  // 展开后子级项
+  .el-submenu.is-opened{
+    // 子级项
+    .el-menu.el-menu--inline{
+      // 嵌套子列表
+      .navItem{
+        background-color: #354153;
+        // 子列表项
+        .el-menu-item{
+          background-color: #1f2d3d;
+          // 子列表 icon
+          i, span{
+              color: white;
+          }
+        }
+      }
+    }
+  }
+}
+// 动态样式
+ul.el-menu{
+  div.navItem{
+    // 无子级项
+    // 鼠标滑过
+    li.el-menu-item:hover{
+      background-color: black;
+    }
+    // 获取到焦点
+    li.el-menu-item:focus{
+      background-color: #354153;
+      i, span{
+        color: rgb(64, 158, 255);
+      }
+    }
+    // 有子级项
+    li.el-submenu{
+      // 鼠标滑过
+      div.el-submenu__title:hover{
+        background-color: black;
+      }
+      // 获取到焦点
+      div.el-submenu__title:focus{
+        i, span{
+          color: rgb(64, 158, 255);
+        }
+      }
+    }
+    // 子级项展开时
+    li.el-submenu.is-opened{
+      // 鼠标滑过
+      div.el-submenu__title:hover{
+        background-color: black;
+      }
+      // 获取到焦点
+      div.el-submenu__title:focus{
+        i, span{
+          color: rgb(64, 158, 255);
+        }
+      }
+      // 子级项
+      ul.el-menu.el-menu--inline{
+        div.navItem{
+          // 鼠标滑过
+          li.el-menu-item:hover{
+            background-color: black;
+          }
+          // 获取到焦点
+          li.el-menu-item:focus{
+            background-color: #354153;
+            i, span{
+              color: rgb(64, 158, 255);
+            }
+          }
+        }
+      }
+    }
+  }
+}
 </style>

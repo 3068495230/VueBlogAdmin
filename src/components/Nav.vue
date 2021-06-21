@@ -7,8 +7,8 @@
 -->
 <template>
   <div class="nav">
-      <!-- element ui 左侧导航栏 -->
-      <el-col :span="12">
+    <!-- element ui 左侧导航栏 -->
+    <el-col :span="12">
         <router-link to="/home">
             <!-- 头像 -->
             <el-avatar :size="60" src="https://cube.elemecdn.com/0/88/03b0d39583f48206768a7534e55bcpng.png"></el-avatar>
@@ -119,17 +119,9 @@ export default {
         height: 100%;
         /* 导航栏列表 */
         .el-menu{
-            background-color: #354153;
+            background-color: transparent;
             border: none;
             color: white;
-            /* 导航栏列表项 */
-            i, span{
-                color: white;
-            }
-            /* 导航栏列表项被点击时 */
-            .el-menu-item:focus, .el-menu-item:hover, .el-submenu__title:focus, .el-submenu__title:hover{
-                background-color: black;
-            }
         }
         // 头像样式
         .el-avatar{

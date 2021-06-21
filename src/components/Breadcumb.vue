@@ -15,8 +15,6 @@
             <router-link :to="v.path">{{ v.meta.title }}</router-link>
         </el-breadcrumb-item>
     </el-breadcrumb>
-    <!-- 退出登录按钮 -->
-    <el-button type="primary" @click="goBack">退出</el-button>
   </div>
 </template>
 
@@ -29,16 +27,6 @@ export default {
         return {
             // 初始化面包屑组内容
             breadList: []
-        }
-    },
-    // 方法
-    methods: {
-        // 退出登录
-        goBack(){
-            // 跳转到登录页面
-            this.$router.push('/login')
-            // 移除保存本地的 用户信息
-            sessionStorage.removeItem('username')
         }
     },
     // 监听
@@ -63,22 +51,19 @@ export default {
     width: 100%;
     height: 60px;
     z-index: 10;
-    position: relative;
     /* 面包屑布局 */
     .el-breadcrumb{
         width: 100%;
-        padding-top: 20px;
+        line-height: 60px;
         /* 面包屑每项 */
         .el-breadcrumb__item{
             height: 2vh;
-            font-weight: 600;
+            .el-breadcrumb__inner{
+                a{
+                    font-weight: 500;
+                }
+            }
         }
-    }
-    /* 退出按钮 */
-    button.el-button{
-        position: absolute;
-        top: 10px;
-        right: 0;
     }
 }
 </style>

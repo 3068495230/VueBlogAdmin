@@ -104,7 +104,7 @@ const routes = [
         path: '/error',
         name: 'error',
         meta: {
-          title: '文章管理'
+          title: '错误页面'
         },
         component: {render(c) { return c('router-view') }},
         // 文章列表、添加页
@@ -150,6 +150,7 @@ const routes = [
 ];
 
 const router = new VueRouter({
+  linkActiveClass: 'active',
   routes,
 });
 
