@@ -9,8 +9,10 @@
   <div class="nav">
       <!-- element ui 左侧导航栏 -->
       <el-col :span="12">
-        <!-- 头像 -->
-        <el-avatar :size="60" src="https://cube.elemecdn.com/0/88/03b0d39583f48206768a7534e55bcpng.png"></el-avatar>
+        <router-link to="/home">
+            <!-- 头像 -->
+            <el-avatar :size="60" src="https://cube.elemecdn.com/0/88/03b0d39583f48206768a7534e55bcpng.png"></el-avatar>
+        </router-link>
         <!-- 导航栏 -->
         <el-menu default-active="$route.path" exact router>
             <!-- 使用导航树组件循环渲染出所有项 -->
@@ -35,52 +37,69 @@ export default {
             items: [
                 {
                     name: '首页',
-                    url: 'index',
+                    url: '/index',
                     icon: 'el-icon-menu'
                 },
                 {
                     name: '用户管理',
-                    url: 'user',
-                    icon: 'el-icon-s-data',
+                    url: '/user',
+                    icon: 'el-icon-user-solid',
                     child: [
                         {
                             name: '用户列表',
-                            url: 'userList',
+                            url: '/user/userList',
                             icon: 'el-icon-s-data',
                         },
                         {
                             name: '用户添加',
-                            url: 'userAdd',
-                            icon: 'el-icon-s-data',
+                            url: '/user/userAdd',
+                            icon: 'el-icon-circle-plus',
                         }
                     ],
                 },
                 {
                     name: '分类管理',
-                    url: 'classfiy',
-                    icon: 'el-icon-s-data'
+                    url: '/classfiy',
+                    icon: 'el-icon-s-order'
                 },
                 {
                     name: '博客管理',
-                    url: 'blog',
-                    icon: 'el-icon-chat-dot-round',
+                    url: '/blog',
+                    icon: 'el-icon-reading',
                     child: [
                         {
                             name: '博客列表',
-                            url: 'blogList',
+                            url: '/blog/blogList',
                             icon: 'el-icon-s-data',
                         },
                         {
                             name: '博客添加',
-                            url: 'blogAdd',
-                            icon: 'el-icon-s-data',
+                            url: '/blog/blogAdd',
+                            icon: 'el-icon-edit-outline',
+                        }
+                    ],
+                },
+                {
+                    name: '错误页面',
+                    url: '/error',
+                    icon: 'el-icon-error',
+                    child: [
+                        {
+                            name: '401',
+                            url: '/error/401',
+                            icon: 'el-icon-error',
+                        },
+                        {
+                            name: '404',
+                            url: '/error/404',
+                            icon: 'el-icon-error',
                         }
                     ],
                 },
                 {
                     name: '账户安全',
-                    url: 'security',
-                    icon: 'el-icon-chat-dot-round',
+                    url: '/security',
+                    icon: 'el-icon-lock',
                 }
             ]
         }

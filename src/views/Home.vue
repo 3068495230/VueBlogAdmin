@@ -17,10 +17,7 @@
         <el-container>
           <!-- 头部内容 -->
           <el-header>
-            <el-radio-group v-model="isCollapse" style="margin-bottom: 20px;">
-            <el-radio-button :label="false">展开</el-radio-button>
-            <el-radio-button :label="true">收起</el-radio-button>
-          </el-radio-group>
+            
             <!-- 面包屑 -->
             <Breadcumb></Breadcumb>
           </el-header>
@@ -28,6 +25,7 @@
           <el-main>
             <!-- 显示页面 -->
             <router-view>
+              
             </router-view>
           </el-main>
         </el-container>

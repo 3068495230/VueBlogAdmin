@@ -12,7 +12,7 @@
         <!-- 遍历面包屑 -->
         <el-breadcrumb-item v-for="(v, i) in breadList" :key="i">
             <!-- 面包屑内容：使用 router-link 代替，实现点击面包路由跳转 -->
-            <router-link :to="{ path: 'v.path' }">{{ v.meta.title }}</router-link>
+            <router-link :to="v.path">{{ v.meta.title }}</router-link>
         </el-breadcrumb-item>
     </el-breadcrumb>
     <!-- 退出登录按钮 -->

@@ -1,12 +1,12 @@
 <template>
-    <div class="index">
-        首页
+    <div class="error404">
+        404
     </div>
 </template>
 
 <script>
 export default {
-    name: 'Index',
+    name: 'error404',
 
 }
 </script>

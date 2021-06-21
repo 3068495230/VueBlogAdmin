@@ -28,11 +28,16 @@ const routes = [
   {
     path: "/home",
     name: "home",
+    // 重定向
+    redirect: '/index',
+    meta: {
+      title: '首页'
+    },
     component: Home,
     // 后台子页
     children: [
       {
-        path: 'index',
+        path: '/index',
         name: 'index',
         meta: {
           title: '首页'
@@ -41,16 +46,16 @@ const routes = [
       },
       // 用户管理页
       {
-        path: 'user',
+        path: '/user',
         name: 'user',
         meta: {
           title: '用户管理'
         },
-        component: () => import('../components/user/userList.vue'),
+        component: {render(c) { return c('router-view') }},
         // 用户列表、添加页
         children: [
           {
-            path: 'userList',
+            path: '/user/userList',
             name: 'userList',
             meta: {
               title: '用户列表'
@@ -58,7 +63,7 @@ const routes = [
             component: () => import('../components/user/userList.vue'),
           },
           {
-            path: 'userAdd',
+            path: '/user/userAdd',
             name: 'userAdd',
             meta: {
               title: '用户添加'
@@ -69,16 +74,16 @@ const routes = [
       },
       // 文章管理页
       {
-        path: 'blog',
+        path: '/blog',
         name: 'blog',
         meta: {
           title: '文章管理'
         },
-        component: () => import('../components/blog/blogList.vue'),
+        component: {render(c) { return c('router-view') }},
         // 文章列表、添加页
         children: [
           {
-            path: 'blogList',
+            path: '/blog/blogList',
             name: 'blogList',
             meta: {
               title: '文章列表'
@@ -86,7 +91,7 @@ const routes = [
             component: () => import('../components/blog/blogList.vue')
           },
           {
-            path: 'blogAdd',
+            path: '/blog/blogAdd',
             name: 'blogAdd',
             meta: {
               title: '文章添加'
@@ -95,9 +100,36 @@ const routes = [
           }
         ]
       },
+      {
+        path: '/error',
+        name: 'error',
+        meta: {
+          title: '文章管理'
+        },
+        component: {render(c) { return c('router-view') }},
+        // 文章列表、添加页
+        children: [
+          {
+            path: '/error/401',
+            name: 'error401',
+            meta: {
+              title: '401 页面'
+            },
+            component: () => import('../components/error/401.vue')
+          },
+          {
+            path: '/error/404',
+            name: 'error404',
+            meta: {
+              title: '404 页面'
+            },
+            component: () => import('../components/error/404.vue')
+          }
+        ]
+      },
       // 分类管理页
       {
-        path: 'classfiy',
+        path: '/classfiy',
         name: 'classfiy',
         meta: {
           title: '分类管理'
@@ -106,7 +138,7 @@ const routes = [
       },
       // 账户安全页
       {
-        path: 'security',
+        path: '/security',
         name: 'security',
         meta: {
           title: '账户安全'

@@ -1,6 +1,6 @@
 <template>
     <div class="blogList">
-        blogList
+        blogLists
     </div>
 </template>
 
