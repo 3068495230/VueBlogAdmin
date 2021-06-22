@@ -7,28 +7,25 @@
 -->
 <template>
   <div class="home">
-    <!-- 使用 element ui 布局容器 -->
-      <el-container>
-        <!-- 左侧导航栏 -->
-        <el-aside width="200px">
-            <Nav></Nav>
-        </el-aside>
-        <!-- 右侧主体区域 -->
-        <el-container>
-          <!-- 头部内容 -->
-          <el-header>
-            <!-- 面包屑 -->
-            <Breadcumb></Breadcumb>
-            <!-- 退出登录按钮 -->
-            <el-button type="primary" @click="goBack">退出</el-button>
-          </el-header>
-          <!-- 主体内容 -->
-          <el-main>
-            <!-- 显示页面 -->
-            <router-view></router-view>
-          </el-main>
-        </el-container>
-      </el-container>
+    <!-- 左侧导航栏 -->
+    <el-aside width="200px">
+        <Nav></Nav>
+    </el-aside>
+    <!-- 右侧主体区域 -->
+    <el-container>
+      <!-- 头部内容 -->
+      <el-header>
+        <!-- 面包屑 -->
+        <Breadcumb></Breadcumb>
+        <!-- 退出登录按钮 -->
+        <el-button type="primary" @click="goBack">退出</el-button>
+      </el-header>
+      <!-- 主体内容 -->
+      <el-main>
+        <!-- 显示页面 -->
+        <router-view></router-view>
+      </el-main>
+    </el-container>
   </div>
 </template>
 
@@ -69,43 +66,45 @@ export default {
 }
 /* 布局 */
 .home{
+
+  // height: 500px;
   /* 布局：左侧样式 */
+  .el-aside {
+    background-color: #354153;
+    height: 100vh;
+    color: white;
+    float: left;
+  }
+  // 布局：右侧样式
   .el-container{
-    width: 100%;
-    /* 布局：左侧样式 */
-    .el-aside {
-      background-color: #354153;
-      width: 200px;
-      height: 100vh;
-      color: white;
+    height: 100vh;
+    /* 布局：头部样式 */
+    .el-header{
+      width: 100%;
+      height: 40px;
+      background-color: white;
+      box-shadow: 0px 1px 5px gray;
+      color: #333;
+      text-align: center;
+      line-height: 60px;
+      position: fixed;
+      z-index: 10;
+      /* 退出按钮 */
+      button.el-button{
+        width: 88px;
+        position: absolute;
+        top: 9px;
+        right: 220px;
+      }
     }
-    // 布局：右侧样式
-    .el-container{
-      /* 布局：头部样式 */
-      .el-header{
-        width: 100%;
-        height: 40px;
-        background-color: transparent;
-        box-shadow: 0px 1px 5px gray;
-        color: #333;
-        text-align: center;
-        line-height: 60px;
-        position: fixed;
-        /* 退出按钮 */
-        button.el-button{
-          width: 88px;
-          position: absolute;
-          top: 9px;
-          right: 220px;
-        }
-      }
-      /* 布局：右侧主体区域样式 */
-      .el-main{
-        margin-top: 60px;
-        padding: 10px;
-        background-color: white;
-        color: #333;
-      }
+    /* 布局：右侧主体区域样式 */
+    .el-main{
+      height: 1000px;
+      margin-top: 60px;
+      padding: 10px;
+      background-color: white;
+      color: #333;
+      overflow: auto;
     }
   }
 }

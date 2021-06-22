@@ -14,7 +14,9 @@
             <el-avatar :size="60" src="https://cube.elemecdn.com/0/88/03b0d39583f48206768a7534e55bcpng.png"></el-avatar>
         </router-link>
         <!-- 导航栏 -->
-        <el-menu default-active="$route.path" exact router>
+        <el-menu default-active="$route.path" exact router
+            text-color="#fff"
+            active-text-color="#ffd04b">
             <!-- 使用导航树组件循环渲染出所有项 -->
             <nav-item v-for="(v, i) in items" :key="i" :item="v"></nav-item>
         </el-menu>

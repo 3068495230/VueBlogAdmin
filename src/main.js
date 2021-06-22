@@ -16,6 +16,8 @@ Vue.use(ElementUI);
 // 引入 axios
 import axios from './http/http.js'
 Vue.prototype.$http = axios
+// 引入 Echarts
+
 
 Vue.config.productionTip = false;
 
