@@ -12,7 +12,6 @@
         <i :class="item.icon"></i>
         <span slot="title">{{ item.name }}</span>
     </el-menu-item>
-
     <!-- 有子级项 -->
     <el-submenu v-else :index="item.url">
         <template slot="title">
@@ -33,6 +32,7 @@ export default {
 }
 </script>
 
+// 无子级样式
 <style lang="less" scoped>
 // 导航栏列表项
 .navItem{
@@ -42,32 +42,6 @@ export default {
     // icon
     i, span{
         color: white;
-    }
-  }
-  // 有子级项
-  .el-submenu{
-    .el-submenu__title{
-      i, span{
-        color: white;
-      }
-    }
-  }
-  // 展开后子级项
-  .el-submenu.is-opened{
-    // 子级项
-    .el-menu.el-menu--inline{
-      // 嵌套子列表
-      .navItem{
-        background-color: #354153;
-        // 子列表项
-        .el-menu-item{
-          background-color: #1f2d3d;
-          // 子列表 icon
-          i, span{
-              color: white;
-          }
-        }
-      }
     }
   }
 }
@@ -86,6 +60,41 @@ ul.el-menu{
         color: rgb(64, 158, 255);
       }
     }
+  }
+}
+</style>
+
+// 有子级样式
+<style lang="less">
+// 有子级项
+.el-submenu{
+  .el-submenu__title{
+    i, span{
+      color: white;
+    }
+  }
+}
+// 展开后子级项
+.el-submenu.is-opened{
+  // 子级项
+  .el-menu.el-menu--inline{
+    // 嵌套子列表
+    .navItem{
+      background-color: #354153;
+      // 子列表项
+      .el-menu-item{
+        background-color: #1f2d3d;
+        // 子列表 icon
+        i, span{
+            color: white;
+        }
+      }
+    }
+  }
+}
+// 动态样式
+ul.el-menu{
+  div.navItem{
     // 有子级项
     li.el-submenu{
       // 鼠标滑过
@@ -120,7 +129,7 @@ ul.el-menu{
           }
           // 获取到焦点
           li.el-menu-item:focus{
-            background-color: #354153;
+            background-color: #1f2d3d;
             i, span{
               color: rgb(64, 158, 255);
             }
