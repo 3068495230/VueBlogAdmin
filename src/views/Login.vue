@@ -8,7 +8,7 @@
 <template>
   <div class="login">
     <h1>后台管理系统</h1>
-    <!-- 使用 element-ui 表单 -->
+    <!-- element-ui 表单验证登录 -->
     <el-form :model="ruleForm" :rules="rules" ref="ruleForm" label-width="100px" class="demo-ruleForm">
       <!-- 验证账号 -->
       <el-form-item label="账号" prop="account">
@@ -30,26 +30,24 @@
 
 export default {
   name: "Login",
-  // 为什么在组件的 data 得以返回的方式写？
-  // 形成闭包
   data(){
     return{
       // 输入内容
       ruleForm: {
           account: '',
           password: ''
-        },
+      },
       // 效验信息
       rules: {
-          account: [
-            { required: true, message: '请输入账户', trigger: 'blur' },
-            { min: 5, max: 11, message: '长度在 6 到 11 个字符', trigger: 'blur' }
-          ],
-          password: [
-            { required: true, message: '请输入密码', trigger: 'blur' },
-            { min: 6, max: 11, message: '长度在 6 到 11 个字符', trigger: 'blur' }
-          ]
-        }
+        account: [
+          { required: true, message: '请输入账户', trigger: 'blur' },
+          { min: 5, max: 11, message: '长度在 6 到 11 个字符', trigger: 'blur' }
+        ],
+        password: [
+          { required: true, message: '请输入密码', trigger: 'blur' },
+          { min: 6, max: 11, message: '长度在 6 到 11 个字符', trigger: 'blur' }
+        ]
+      }
     }
   },
   // 方法
@@ -82,27 +80,27 @@ export default {
       })
     }
   }
-};
+}
 </script>
 
 <style lang="less" scope>
-  .login{
-    width: 400px;
-    height: 100%;
-    .el-form{
-      .el-form-item{
-        .el-form-item__content{
-          .el-input{
-            .el-input__inner{
-              width: 350px;
-            }
+.login{
+  width: 400px;
+  height: 100%;
+  .el-form{
+    .el-form-item{
+      .el-form-item__content{
+        .el-input{
+          .el-input__inner{
+            width: 350px;
           }
         }
       }
     }
-    h1{
-      margin-left: 100px;
-      height:  40px;
-    }
   }
+  h1{
+    margin-left: 100px;
+    height:  40px;
+  }
+}
 </style>

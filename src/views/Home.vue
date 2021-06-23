@@ -17,7 +17,7 @@
       <el-header>
         <!-- 面包屑 -->
         <Breadcumb></Breadcumb>
-        <!-- 退出登录按钮 -->
+        <!-- 退出登录 -->
         <el-button type="primary" @click="goBack">退出</el-button>
       </el-header>
       <!-- 主体内容 -->
