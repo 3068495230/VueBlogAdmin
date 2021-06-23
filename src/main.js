@@ -16,6 +16,12 @@ Vue.use(ElementUI);
 // 引入 axios
 import axios from './http/http.js'
 Vue.prototype.$http = axios
+// 引入富文本组件
+import  VueQuillEditor from 'vue-quill-editor'
+import 'quill/dist/quill.core.css'
+import 'quill/dist/quill.snow.css'
+import 'quill/dist/quill.bubble.css'
+Vue.use(VueQuillEditor)
 
 
 Vue.config.productionTip = false;

@@ -41,7 +41,7 @@ export default {
       rules: {
         account: [
           { required: true, message: '请输入账户', trigger: 'blur' },
-          { min: 5, max: 11, message: '长度在 6 到 11 个字符', trigger: 'blur' }
+          { min: 5, max: 11, message: '长度在 5 到 11 个字符', trigger: 'blur' }
         ],
         password: [
           { required: true, message: '请输入密码', trigger: 'blur' },
@@ -60,13 +60,15 @@ export default {
         return
       }
       // 发送请求
-      this.$http.get('/user').then(res => {
-        // 
+      this.$http.get(`/user?account=${this.ruleForm.account}`).then(res => {
+        // 确认请求完全成功在进行下一步操作
         if(res.statusText == 'OK' && res.status == 200){
-          // 
+          // 使用解构赋值拿到数据
           let {account, password} = res.data[0]
-          // 
+          // 判断账密是否正确
           if(this.ruleForm.account == account && this.ruleForm.password == password){
+            // 权限判断
+            if(true){}
             // 缓存本地账户信息
             sessionStorage.setItem('username', this.ruleForm.account)
             // 并跳转到首页

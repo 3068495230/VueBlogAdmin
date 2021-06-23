@@ -4,7 +4,9 @@
       "id": 0,
       "name": "admin",
       "account": "admin",
-      "password": 123456,
+      "password": "123456",
+      "email": "3068495230@qq.com",
+      "phone": "13873478699",
       "permissions": 0
     },
     {
@@ -20,20 +22,27 @@
       "account": "xuyunhans",
       "password": 3068495230,
       "permissions": 2
+    },
+    {
+      "name": "1231231",
+      "account": "12312312312",
+      "password": "123123",
+      "permissions": "0",
+      "id": 3
     }
   ],
   "classify": {
-      "jQuery": "jQuery",
-      "Html+Css": "Html+Css",
-      "javaScript": "JavaScript",
-      "Es": "ES",
-      "Ts": "TS",
-      "Vue": "Vue",
-      "Webpack": "Webpack",
-      "Git": "Git",
-      "PHP": "PHP",
-      "MySql": "MySql"
-    },
+    "jQuery": "jQuery",
+    "Html+Css": "Html+Css",
+    "javaScript": "JavaScript",
+    "Es": "ES",
+    "Ts": "TS",
+    "Vue": "Vue",
+    "Webpack": "Webpack",
+    "Git": "Git",
+    "PHP": "PHP",
+    "MySql": "MySql"
+  },
   "blog": [
     {
       "id": 0,
@@ -88,9 +97,21 @@
       "昨日新增": 12
     }
   },
-  "echarts":{
-    "userData": [454, 564, 656, 745, 851],
-    "blogData": [357, 791, 489, 143, 645],
+  "echarts": {
+    "userData": [
+      454,
+      564,
+      656,
+      745,
+      851
+    ],
+    "blogData": [
+      357,
+      791,
+      489,
+      143,
+      645
+    ],
     "classifyData": {
       "jQuery": 12,
       "Html+Css": 32,

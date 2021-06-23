@@ -19,7 +19,7 @@
             <p>昵称：</p>
           </el-col>
           <el-col :span="1">
-            <span>achens</span>
+            <span :style="name == '网络错误' ? 'color:red' : ''">{{ name }}</span>
           </el-col>
         </el-row>
         <!-- 账号 -->
@@ -28,7 +28,7 @@
             <p>账号：</p>
           </el-col>
           <el-col :span="1">
-            <span>achens</span>
+            <span :style="name == '网络错误' ? 'color:red' : ''">{{ account }}</span>
           </el-col>
         </el-row>
         <!-- 邮箱 -->
@@ -37,7 +37,7 @@
             <p>邮箱：</p>
           </el-col>
           <el-col :span="1">
-            <span>323412413@qwq.sdfs</span>
+            <span :style="name == '网络错误' ? 'color:red' : ''">{{ email }}</span>
           </el-col>
         </el-row>
         <!-- 手机号 -->
@@ -46,7 +46,7 @@
             <p>手机号：</p>
           </el-col>
           <el-col :span="1">
-            <span>1345639763</span>
+            <span :style="name == '网络错误' ? 'color:red' : ''">{{ phone }}</span>
           </el-col>
         </el-row>
         <!-- 注销 -->
@@ -73,8 +73,8 @@
           </el-form-item>
         </el-form>
       </el-tab-pane>
-      <!-- 绑定邮箱页 -->
-      <el-tab-pane label="绑定邮箱">
+      <!-- 修改邮箱页 -->
+      <el-tab-pane label="修改邮箱">
         <el-form :model="ruleForm" status-icon :rules="rules" ref="ruleEmail" label-width="90px" class="demo-ruleForm">
           <el-form-item label="Email:" prop="buyerEmail" required>
               <el-input v-model="ruleForm.buyerEmail"></el-input>
@@ -85,8 +85,8 @@
           </el-form-item>
         </el-form>
       </el-tab-pane>
-      <!-- 绑定手机号页 -->
-      <el-tab-pane label="绑定手机号">
+      <!-- 修改手机号页 -->
+      <el-tab-pane label="修改手机号">
         <el-form :model="ruleForm" status-icon :rules="rules" ref="rulePhone" label-width="90px" class="demo-ruleForm">
           <el-form-item label="联系电话:" prop="buyerPhone" required>
               <el-input v-model="ruleForm.buyerPhone"></el-input>
@@ -154,6 +154,7 @@ export default {
         }
       }
       return {
+        // 用户输入
         ruleForm: {
           // 密码
           pass: '',
@@ -164,6 +165,7 @@ export default {
           // 手机号
           buyerPhone: ''
         },
+        // 验证规则
         rules: {
           // 验证密码
           pass: [
@@ -181,15 +183,42 @@ export default {
           buyerPhone: [
             { required: true, validator: checkPhone, trigger: 'blur' }
           ]
-        }
+        },
+        // 昵称
+        name: '网络错误',
+        // 账户
+        account: '网络错误',
+        // 邮箱
+        email: '网络错误',
+        // 手机号
+        phone: '网络错误'
       }
     },
     methods: {
       // 修改密码
       submitPassWord(formName) {
         this.$refs[formName].validate((valid) => {
-          if (valid) {
-            alert('正确')
+          if(valid){
+            // 获取存储在本地的账户
+            let user = sessionStorage.getItem('username')
+            // 先发送请求获取用户的 id
+            this.$http.get(`/user?account=${user}`).then(res => {
+              let id = res.data[0].id
+              // 拿到要修改的密码
+              let data = {
+                password: this.ruleForm.checkPass
+              }
+              // 发送修改请求
+              this.$http.patch(`/user/${id}`, data).then(res => {
+                alert('修改成功！')
+                // 清空输入框内容
+                this.$refs[formName].resetFields()
+              }, err => {
+                console.log(err)
+              })
+            }, err => {
+              console.log(err)
+            })
           }else{
             alert('密码修改失败')
             console.log('error submit!!')
@@ -205,7 +234,26 @@ export default {
       submitEmail(formName) {
         this.$refs[formName].validate((valid) => {
           if (valid) {
-            alert('修改成功！')
+            // 获取存储在本地的账户
+            let user = sessionStorage.getItem('username')
+            // 先发送请求获取用户的 id
+            this.$http.get(`/user?account=${user}`).then(res => {
+              let id = res.data[0].id
+              // 拿到要修改的密码
+              let data = {
+                email: this.ruleForm.buyerEmail
+              }
+              // 发送修改请求
+              this.$http.patch(`/user/${id}`, data).then(res => {
+                alert('修改成功！')
+                // 清空输入框内容
+                this.$refs[formName].resetFields()
+              }, err => {
+                console.log(err)
+              })
+            }, err => {
+              console.log(err)
+            })
           }else{
             alert('邮箱修改失败')
             console.log('error submit!!')
@@ -217,7 +265,26 @@ export default {
       submitPhone(formName) {
         this.$refs[formName].validate((valid) => {
           if (valid) {
-            alert('修改成功！')
+            // 获取存储在本地的账户
+            let user = sessionStorage.getItem('username')
+            // 先发送请求获取用户的 id
+            this.$http.get(`/user?account=${user}`).then(res => {
+              let id = res.data[0].id
+              // 拿到要修改的密码
+              let data = {
+                phone: this.ruleForm.buyerPhone
+              }
+              // 发送修改请求
+              this.$http.patch(`/user/${id}`, data).then(res => {
+                alert('修改成功！')
+                // 清空输入框内容
+                this.$refs[formName].resetFields()
+              }, err => {
+                console.log(err)
+              })
+            }, err => {
+              console.log(err)
+            })
           }else{
             alert('手机号修改失败')
             console.log('error submit!!')
@@ -231,7 +298,25 @@ export default {
           this.$router.push('/login')
           // 移除保存本地的 用户信息
           sessionStorage.removeItem('username')
+      },
+      // 获取当前登录者信息
+      getUser(){
+        // 获取存储在本地的账户
+        let user = sessionStorage.getItem('username')
+        // 通过本地的账户请求后台
+        this.$http.get(`/user?account=${user}`).then(res => {
+          // 拿到后台数据后进行赋值
+          this.name = res.data[0].name
+          this.account = res.data[0].account
+          this.email = res.data[0].email
+          this.phone = res.data[0].phone
+        }, err => {
+          console.log(err)
+        })
       }
+    },
+    mounted(){
+      this.getUser()
     }
   }
 </script>
