@@ -201,9 +201,9 @@ export default {
         this.$refs[formName].validate((valid) => {
           if(valid){
             // 获取存储在本地的账户
-            let user = sessionStorage.getItem('username')
+            let account = sessionStorage.getItem('account')
             // 先发送请求获取用户的 id
-            this.$http.get(`/user?account=${user}`).then(res => {
+            this.$http.get(`/user?account=${account}`).then(res => {
               let id = res.data[0].id
               // 拿到要修改的密码
               let data = {
@@ -236,9 +236,9 @@ export default {
         this.$refs[formName].validate((valid) => {
           if (valid) {
             // 获取存储在本地的账户
-            let user = sessionStorage.getItem('username')
+            let account = sessionStorage.getItem('account')
             // 先发送请求获取用户的 id
-            this.$http.get(`/user?account=${user}`).then(res => {
+            this.$http.get(`/user?account=${account}`).then(res => {
               let id = res.data[0].id
               // 拿到要修改的密码
               let data = {
@@ -267,9 +267,9 @@ export default {
         this.$refs[formName].validate((valid) => {
           if (valid) {
             // 获取存储在本地的账户
-            let user = sessionStorage.getItem('username')
+            let account = sessionStorage.getItem('account')
             // 先发送请求获取用户的 id
-            this.$http.get(`/user?account=${user}`).then(res => {
+            this.$http.get(`/user?account=${account}`).then(res => {
               let id = res.data[0].id
               // 拿到要修改的密码
               let data = {
@@ -298,12 +298,12 @@ export default {
           // 跳转到登录页面
           this.$router.push('/login')
           // 移除保存本地的 用户信息
-          sessionStorage.removeItem('username')
+          sessionStorage.removeItem('account')
       },
       // 获取当前登录者信息
       getUser(){
         // 获取存储在本地的账户
-        let user = sessionStorage.getItem('username')
+        let user = sessionStorage.getItem('account')
         // 通过本地的账户请求后台
         this.$http.get(`/user?account=${user}`).then(res => {
           // 拿到后台数据后进行赋值

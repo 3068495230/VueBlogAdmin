@@ -13,27 +13,28 @@
                     <p>当前时间：{{ time }}</p>
                 </div>
             </div>
-            <!-- 用户数据 -->
+            <!-- 后台数据展示 -->
             <div class="msg">
+                <!-- 用户数据 -->
                 <el-row :gutter="20">
-                    <el-col :span="8" style="padding: 0px;">
+                    <el-col :span="8" style="padding: 0px;" v-for="(item, key) in userState" :key="key">
                         <el-card :body-style="{ padding: '0px' }">
-                            <i class="el-icon-user"></i>
+                            <i :class="item.icon"></i>
                             <div>
-                                <p>用户总数</p>
-                                <p class="msg">{{  }}</p>
+                                <p class="title">{{ item.title }}</p>
+                                <p class="number">{{ item.number }}</p>
                             </div>
                         </el-card>
                     </el-col>
                 </el-row>
                 <!-- 文章数据 -->
                 <el-row :gutter="20">
-                    <el-col :span="8" style="padding: 0px;">
+                    <el-col :span="8" style="padding: 0px;" v-for="(item, key) in blogState" :key="key">
                         <el-card :body-style="{ padding: '0px' }">
-                            <i class="el-icon-tickets"></i>
+                            <i :class="item.icon"></i>
                             <div>
-                                <p>文章总数</p>
-                                <p class="msg">{{  }}</p>
+                                <p class="title">{{ item.title }}</p>
+                                <p class="number">{{ item.number }}</p>
                             </div>
                         </el-card>
                     </el-col>
@@ -93,8 +94,20 @@ export default {
     name: 'Index',
     data(){
         return{
-            userName: sessionStorage.getItem('username'),
+            // 获取当前登录账户名
+            userName: sessionStorage.getItem('name'),
+            // 获取当前时间
             time: date.newDate(true),
+            // 获取后台用户数据
+            userState: '',
+            // 获取后台文章数据
+            blogState: '',
+            // 获取后台用户图表数据
+            userEcharts: '',
+            // 获取后台文章图表数据
+            blogEcharts: '',
+            // 获取后台分类图表数据
+            classifyEcharts: '',
             // 多选框数据
             checked: true
         }
@@ -107,9 +120,25 @@ export default {
             }, 1000);
         },
         // 获取后台数据
-
+        getState(){
+            this.$http.get('/state').then(res => {
+                this.userState = res.data.user
+                this.blogState = res.data.blog
+            }, err => {
+                console.log(err)
+            })
+        },
         // 获取图表数据
-        
+        getEcharts(){
+            this.$http.get('/echarts').then(res => {
+                this.userEcharts = res.data.userData
+                console.log(this.userEcharts)
+                this.blogEcharts = res.data.blogData
+                this.classifyEcharts = res.data.classifyData
+            }, err => {
+                console.log(err)
+            })
+        },
         // user 图表数据
         userData(){
             // 基于准备好的dom，初始化echarts实例
@@ -117,17 +146,17 @@ export default {
             // 绘制图表
             myChart.setOption({
                 title: {
-                    text: 'user 增长'
+                    text: '用户增长'
                 },
                 xAxis: {
                     type: 'category',
-                    data: ["22", '23', '24', '25', '26']
+                    data: ["22", '23', '24', '25', '26'] 
                 },
                 yAxis: {
                     type: 'value'
                 },
                 series: [{
-                    data: [120, 200, 150, 80, 70],
+                    data: [12, 33, 4, 25, 55],
                     type: 'line',
                     smooth: true,
                     itemStyle: {
@@ -143,7 +172,7 @@ export default {
             // 绘制图表
             myChart.setOption({
                 title: {
-                    text: 'blog 增长'
+                    text: '博客增长'
                 },
                 xAxis: {
                     type: 'category',
@@ -185,11 +214,11 @@ export default {
                         type: 'pie',
                         radius: '50%',
                         data: [
-                            {value: 1048, name: '搜索引擎'},
-                            {value: 735, name: '直接访问'},
-                            {value: 580, name: '邮件营销'},
-                            {value: 484, name: '联盟广告'},
-                            {value: 300, name: '视频广告'}
+                            {value: 1048, name: 'jQUery'},
+                            {value: 735, name: 'JavaScript'},
+                            {value: 580, name: 'Vue'},
+                            {value: 484, name: 'PHP+MySql'},
+                            {value: 300, name: 'HTML+CSS'}
                         ],
                         emphasis: {
                             itemStyle: {
@@ -206,6 +235,9 @@ export default {
     mounted(){
         // 定时刷新数据
         this.setTime()
+        // 获取后台数据
+        this.getState()
+        this.getEcharts()
         // ECharts 图表展示
         this.userData()
         this.blogData()
@@ -275,11 +307,12 @@ export default {
                     float: left;
                     margin: 0px 10px 0px 0px;
                     .el-card.is-always-shadow{
-                        width: 260px;
+                        width: 100%;
                         height: 95px;
+                        font-size: 23px;
                         i{
                             display: block;
-                            width: 20%;
+                            width: 25%;
                             height: 95px;
                             background-color: rgb(64, 158, 255);
                             float: left;
@@ -288,19 +321,19 @@ export default {
                             color: white;
                         }
                         div{
-                            width: 80%;
+                            width: 75%;
                             height: 90px;
                             text-align: left;
                             padding: 10px 0px 0px 65px;
-                            p{
-                                font-size: 19px;
-                                color: black;
+                            margin: 0px 0px 0px 30px;
+                            p.title{
+                                font-size: 17px;
+                                color: gray;
                             }
-                            p.msg{
-                                font-size: 21px;
+                            p.number{
+                                font-size: 47px;
                                 font-weight: 700;
                                 color: rgb(64, 158, 255);
-                                margin: 10px 0px 0px 0px;
                             }
                         }
                     }

@@ -166,20 +166,18 @@ const router = new VueRouter({
 // 路由拦截
 router.beforeEach((to, from, next) => {
   // 判断是否没有 本地登录信息，用户是否没有保持着登录状态
-  if(!sessionStorage.getItem('username')){
+  if(!sessionStorage.getItem('account')){
     // 地址不是 login 时跳转到 login 中
     if(to.path !== '/login'){
       alert('未登录！')
       next('/login')
     }
   }
-  // 判断用户是否有权限登录后台
-  if(sessionStorage.getItem('permissions') == 2){
-    console.log(1)
-    console.log(sessionStorage.getItem('permissions'))
+   // 判断用户是否有权限进入后台
+  if(sessionStorage.getItem('permissions') == '2'){
     // 地址不是 login 时跳转到 login 中
     if(to.path !== '/login'){
-      alert('权限不够！')
+      alert('权限不够！无法进入后台！')
       next('/login')
     }
   }

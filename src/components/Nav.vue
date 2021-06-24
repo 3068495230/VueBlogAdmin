@@ -110,8 +110,7 @@ export default {
                 }
             ]
         }
-    },
-
+    }
 }
 </script>
 

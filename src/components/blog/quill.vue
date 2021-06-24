@@ -17,9 +17,8 @@
 const toolbarOptions = [
      // 加粗 斜体 下划线 删除线
     ["bold", "italic", "underline", "strike"],
-    // 引用  代码块
+    // 引用代码块
     ["blockquote", "code-block"],
-    
     // 有序、无序列表
     [{ list: "ordered" }, { list: "bullet" }],
     // 上标 、下标
@@ -50,17 +49,12 @@ import { quillEditor } from "vue-quill-editor";
 
 export default {
     name: 'QuillEditor',
-    props: {
-        value: {
-            type: String
-        }
-    },
     components: {
         quillEditor
     },
     data() {
       return {
-          content: this.value,
+          content: '',
               editorOption: {
                   placeholder: "",
                   theme: "snow", // 
@@ -82,7 +76,7 @@ export default {
         },
         onEditorChange() {
           // 调佣父组件方法，实现自子组件向父组件传值
-           this.$emit('content', this.content)
+          this.$emit('content', this.content)
         },
     }
 }
@@ -92,7 +86,6 @@ export default {
 .editor{
   line-height: normal !important;
   min-height: 400px;
-  color: white;
 }
 .ql-editor{
   min-height: 400px;

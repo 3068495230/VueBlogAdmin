@@ -53,7 +53,7 @@ export default {
           // 跳转到登录页面
           this.$router.push('/login')
           // 移除保存本地的 用户信息
-          sessionStorage.removeItem('username')
+          sessionStorage.removeItem('account')
       }
   },
 }

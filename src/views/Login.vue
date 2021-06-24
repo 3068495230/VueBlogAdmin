@@ -23,6 +23,11 @@
         <el-button type="primary" @click="login()">登录</el-button>
       </el-form-item>
     </el-form>
+    <ul>
+      <li>超级管理员账户：admin；密码：123456</li>
+      <li>管理员账户：achens；密码：3068495230</li>
+      <li>普通用户账户：xuyunhans；密码：3068495230</li>
+    </ul>
   </div>
 </template>
 
@@ -64,11 +69,13 @@ export default {
         // 确认请求完全成功在进行下一步操作
         if(res.statusText == 'OK' && res.status == 200){
           // 使用解构赋值拿到数据
-          var {account, password, permissions} = res.data[0]
+          var {account, password, permissions, name} = res.data[0]
           // 判断账密是否正确
           if(this.ruleForm.account == account && this.ruleForm.password == password){
             // 缓存本地账户信息
-            sessionStorage.setItem('username', account)
+            sessionStorage.setItem('account', account)
+            // 缓存本地账户名
+            sessionStorage.setItem('name', name)
             // 缓存权限信息
             sessionStorage.setItem('permissions', permissions)
             // 权限判断
@@ -108,6 +115,13 @@ export default {
   h1{
     margin-left: 100px;
     height:  40px;
+  }
+  ul{
+    width: 100%;
+    margin: 10px 0px 0px 100px;
+    li{
+      margin: 5px;
+    }
   }
 }
 </style>
