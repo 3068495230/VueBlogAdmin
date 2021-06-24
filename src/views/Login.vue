@@ -64,13 +64,18 @@ export default {
         // 确认请求完全成功在进行下一步操作
         if(res.statusText == 'OK' && res.status == 200){
           // 使用解构赋值拿到数据
-          let {account, password} = res.data[0]
+          var {account, password, permissions} = res.data[0]
           // 判断账密是否正确
           if(this.ruleForm.account == account && this.ruleForm.password == password){
-            // 权限判断
-            if(true){}
             // 缓存本地账户信息
-            sessionStorage.setItem('username', this.ruleForm.account)
+            sessionStorage.setItem('username', account)
+            // 缓存权限信息
+            sessionStorage.setItem('permissions', permissions)
+            // 权限判断
+            if(permissions == 2){
+              alert('权限不够！无法登录...')
+              return false
+            }
             // 并跳转到首页
             this.$router.push('/home')
             return

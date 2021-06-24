@@ -99,9 +99,14 @@ export default {
                     ],
                 },
                 {
+                    name: '权限验证',
+                    url: '/permissions',
+                    icon: 'el-icon-lock',
+                },
+                {
                     name: '账户安全',
                     url: '/security',
-                    icon: 'el-icon-lock',
+                    icon: 'el-icon-s-tools',
                 }
             ]
         }

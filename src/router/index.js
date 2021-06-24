@@ -60,7 +60,7 @@ const routes = [
             meta: {
               title: '用户列表'
             },
-            component: () => import('../components/user/userList.vue'),
+            component: () => import('../components/User/userList.vue'),
           },
           {
             path: '/user/userAdd',
@@ -68,7 +68,7 @@ const routes = [
             meta: {
               title: '用户添加'
             },
-            component: () => import('../components/user/userAdd.vue'),
+            component: () => import('../components/User/userAdd.vue'),
           }
         ],
       },
@@ -88,7 +88,7 @@ const routes = [
             meta: {
               title: '文章列表'
             },
-            component: () => import('../components/blog/blogList.vue')
+            component: () => import('../components/Blog/blogList.vue')
           },
           {
             path: '/blog/blogAdd',
@@ -96,7 +96,7 @@ const routes = [
             meta: {
               title: '文章添加'
             },
-            component: () => import('../components/blog/blogAdd.vue')
+            component: () => import('../components/Blog/blogAdd.vue')
           }
         ]
       },
@@ -115,7 +115,7 @@ const routes = [
             meta: {
               title: '401 页面'
             },
-            component: () => import('../components/error/401.vue')
+            component: () => import('../components/Error/401.vue')
           },
           {
             path: '/error/404',
@@ -123,7 +123,7 @@ const routes = [
             meta: {
               title: '404 页面'
             },
-            component: () => import('../components/error/404.vue')
+            component: () => import('../components/Error/404.vue')
           }
         ]
       },
@@ -144,6 +144,15 @@ const routes = [
           title: '账户安全'
         },
         component: () => import('../components/Security.vue')
+      },
+      // 权限验证页
+      {
+        path: '/permissions',
+        name: 'permissions',
+        meta: {
+          title: '账户安全'
+        },
+        component: () => import('../components/Permissions.vue')
       }
     ]
   },
@@ -161,6 +170,16 @@ router.beforeEach((to, from, next) => {
     // 地址不是 login 时跳转到 login 中
     if(to.path !== '/login'){
       alert('未登录！')
+      next('/login')
+    }
+  }
+  // 判断用户是否有权限登录后台
+  if(sessionStorage.getItem('permissions') == 2){
+    console.log(1)
+    console.log(sessionStorage.getItem('permissions'))
+    // 地址不是 login 时跳转到 login 中
+    if(to.path !== '/login'){
+      alert('权限不够！')
       next('/login')
     }
   }

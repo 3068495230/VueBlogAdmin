@@ -1,5 +1,5 @@
 <!--
- * @Description: 文件描述
+ * @Description: 导航栏列表项组件
  * @Author: CY小尘s
  * @Date: 2021-04-15 22:47:04
  * @LastEditTime: 2021-04-16 10:01:39

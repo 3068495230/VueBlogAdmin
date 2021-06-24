@@ -1,5 +1,5 @@
 <template>
-    <div class="Classfiy">
+    <div class="Classify">
         <el-table
             :data="tableData"
             border

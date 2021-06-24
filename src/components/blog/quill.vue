@@ -19,8 +19,7 @@ const toolbarOptions = [
     ["bold", "italic", "underline", "strike"],
     // 引用  代码块
     ["blockquote", "code-block"],
-    // 1、2 级标题
-    [{ header: 1 }, { header: 2 }],
+    
     // 有序、无序列表
     [{ list: "ordered" }, { list: "bullet" }],
     // 上标 、下标
@@ -42,7 +41,9 @@ const toolbarOptions = [
     // 清除文本格式
     ["clean"],
     // 链接
-    ["link",]
+    ["link",],
+    // 上传图片
+    ['image']
 ]
 // 导入富文本
 import { quillEditor } from "vue-quill-editor";
@@ -58,20 +59,20 @@ export default {
         quillEditor
     },
     data() {
-    return {
-        content: this.value,
-            editorOption: {
-                placeholder: "",
-                theme: "snow", // or 'bubble'
-                placeholder: "输入内容",
-                modules: {
-                    toolbar: {
-                        container: toolbarOptions,
-                    }
-                }
-            },
-        }
-    },
+      return {
+          content: this.value,
+              editorOption: {
+                  placeholder: "",
+                  theme: "snow", // 
+                  placeholder: "输入内容",
+                  modules: {
+                      toolbar: {
+                          container: toolbarOptions,
+                      }
+                  }
+              },
+          }
+      },
     methods: {
         onEditorBlur() {
 

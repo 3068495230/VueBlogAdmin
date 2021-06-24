@@ -13,6 +13,8 @@
       "id": 1,
       "name": "achens",
       "account": "achens",
+      "email": "266858594@qq.com",
+      "phone": "15572986968",
       "password": 3068495230,
       "permissions": 1
     },
@@ -21,6 +23,8 @@
       "name": "xuyunhans",
       "account": "xuyunhans",
       "password": 3068495230,
+      "email": "115892630@qq.com",
+      "phone": "177794862031",
       "permissions": 2
     },
     {

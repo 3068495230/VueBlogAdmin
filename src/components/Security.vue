@@ -81,7 +81,7 @@
           </el-form-item>
           <!-- 提交 -->
           <el-form-item>
-              <el-button type="primary" @click="submitEmail('ruleEmail')">提交</el-button>
+              <el-button type="primary" @click="submitEmail('ruleEmail')">修改</el-button>
           </el-form-item>
         </el-form>
       </el-tab-pane>
@@ -93,13 +93,14 @@
           </el-form-item>
           <!-- 提交 -->
           <el-form-item>
-              <el-button type="primary" @click="submitPhone('rulePhone')">提交</el-button>
+              <el-button type="primary" @click="submitPhone('rulePhone')">修改</el-button>
           </el-form-item>
         </el-form>
       </el-tab-pane>
     </el-tabs>
   </div>
 </template>
+
 <script>
 export default {
     name: 'Secunity',
@@ -322,20 +323,20 @@ export default {
 </script>
 
 <style lang="less" scoped>
-  .secunity{
-    .el-tabs.el-tabs--top.el-tabs--border-card{
-      .el-tabs__content{
-        #pane-0{
-          .el-row{
-            margin: 15px;
-            .el-col.el-col-1{
-              span{
-                color: rgb(64, 158, 255);
-              }
+.secunity{
+  .el-tabs.el-tabs--top.el-tabs--border-card{
+    .el-tabs__content{
+      #pane-0{
+        .el-row{
+          margin: 15px;
+          .el-col.el-col-1{
+            span{
+              color: rgb(64, 158, 255);
             }
           }
         }
       }
     }
   }
+}
 </style>
