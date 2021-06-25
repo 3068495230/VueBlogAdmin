@@ -22,6 +22,7 @@ export default {
   margin: 0px;
   padding: 0px;
   text-decoration: none;
+  list-style-type: none;
 }
 #app{
   width: 100%;

@@ -42,7 +42,7 @@
             </div>
         </div>
         <!-- 图表信息 -->
-        <div class="echarts-adta">
+        <div class="echarts-adta" v-if="flag">
             <!-- user 数据 -->
             <div id="user-data"></div>
             <!-- blog 数据 -->
@@ -55,18 +55,26 @@
             <div class="todoList">
                 <el-card>
                     <div slot="header">
-                        <span>Todo List</span>
-                        <el-button style="float: right; padding: 3px 0" type="text">添加事项</el-button>
+                        <span>待办事项</span>
+                        <el-button style="float: right; padding: 3px 0" type="text" @click="addItem()">添加事项</el-button>
                     </div>
-                    <div>
-                        <el-checkbox v-model="checked">123</el-checkbox>
-                        <span>删除</span>
-                    </div>
-                    <div>
-                        <el-button>显示全部</el-button>
-                        <el-button>显示已完成</el-button>
-                        <el-button>显示未完成</el-button>
-                    </div>
+                    <!-- 待办事项列表 -->
+                    <ul>
+                        <li v-for="(item, key) in TodoList" :key="key">
+                            <el-checkbox v-model="item.check">
+                                <span>{{ item.name }}</span>
+                            </el-checkbox>
+                            <el-button type="text" @click="removeItem(key)">删除</el-button>
+                        </li>
+                    </ul>
+                    <!-- 完成状态 -->
+                    <p>剩余{{ number }}条未完成</p>
+                    <!-- 切换展示状态 -->
+                    <el-button-group>
+                        <el-button :type="TodoListStatus == 'all'? 'primary' : '' " icon="el-icon-sugar" @click="filter('all')">显示全部</el-button>
+                        <el-button :type="TodoListStatus == 'done'? 'primary' : '' " icon="el-icon-dessert" @click="filter('done')">显示已完成</el-button>
+                        <el-button :type="TodoListStatus == 'undone'? 'primary' : '' " icon="el-icon-ice-cream" @click="filter('undone')">显示未完成</el-button>
+                    </el-button-group>
                 </el-card>
             </div>
             <div class="newData">
@@ -74,10 +82,12 @@
                     <div slot="header">
                         <span>最新消息</span>
                     </div>
-                    <div>
-                        <p>123</p>
-                        <time>2021/6/23</time>
-                    </div>
+                    <ul>
+                        <li>
+                            <p>123</p>
+                            <time>2021/6/23</time>
+                        </li>
+                    </ul>
                 </el-card>
             </div>
         </div>
@@ -102,14 +112,34 @@ export default {
             userState: '',
             // 获取后台文章数据
             blogState: '',
+            // 控制图表是否渲染
+            flag: false,
             // 获取后台用户图表数据
             userEcharts: '',
             // 获取后台文章图表数据
             blogEcharts: '',
             // 获取后台分类图表数据
             classifyEcharts: '',
-            // 多选框数据
-            checked: true
+            // 待办事项列表数据
+            TodoList: [
+                {name: '123', check: true},
+                {name: '456', check: true},
+                {name: '789', check: false},
+                {name: '123', check: true},
+                {name: '456', check: false},
+                {name: '123', check: true},
+                {name: '789', check: false},
+                {name: '123', check: false},
+                {name: '456', check: false},
+                {name: '789', check: true}
+            ],
+            // 待办事项展示状态
+            TodoListStatus: 'all'
+        }
+    },
+    computed: {
+        number: function(){
+            return this.TodoList.filter((value) => value.check === false).length
         }
     },
     methods:{
@@ -132,15 +162,15 @@ export default {
         getEcharts(){
             this.$http.get('/echarts').then(res => {
                 this.userEcharts = res.data.userData
-                console.log(this.userEcharts)
                 this.blogEcharts = res.data.blogData
                 this.classifyEcharts = res.data.classifyData
+                this.flag = true
             }, err => {
                 console.log(err)
             })
         },
         // user 图表数据
-        userData(){
+        userData(data){
             // 基于准备好的dom，初始化echarts实例
             var myChart = echarts.init(document.getElementById('user-data'));
             // 绘制图表
@@ -156,7 +186,7 @@ export default {
                     type: 'value'
                 },
                 series: [{
-                    data: [12, 33, 4, 25, 55],
+                    data: data,
                     type: 'line',
                     smooth: true,
                     itemStyle: {
@@ -166,7 +196,7 @@ export default {
             })
         },
         // blog 图表数据
-        blogData(){
+        blogData(data){
             // 基于准备好的dom，初始化echarts实例
             var myChart = echarts.init(document.getElementById('blog-data'));
             // 绘制图表
@@ -182,7 +212,7 @@ export default {
                     type: 'value'
                 },
                 series: [{
-                    data: [120, 200, 150, 80, 70],
+                    data: data,
                     type: 'bar',
                     itemStyle: {
                         color: 'rgb(64, 158, 255)'
@@ -191,7 +221,7 @@ export default {
             })
         },
         // classify 图表数据
-        classifyData(){
+        classifyData(data){
             // 基于准备好的dom，初始化echarts实例
             var myChart = echarts.init(document.getElementById('classify-data'));
             // 绘制图表
@@ -210,16 +240,10 @@ export default {
                 },
                 series: [
                     {
-                        name: '访问来源',
+                        name: '分类占比',
                         type: 'pie',
-                        radius: '50%',
-                        data: [
-                            {value: 1048, name: 'jQUery'},
-                            {value: 735, name: 'JavaScript'},
-                            {value: 580, name: 'Vue'},
-                            {value: 484, name: 'PHP+MySql'},
-                            {value: 300, name: 'HTML+CSS'}
-                        ],
+                        radius: '65%',
+                        data: data,
                         emphasis: {
                             itemStyle: {
                                 shadowBlur: 10,
@@ -231,17 +255,69 @@ export default {
                 ]
             })
         },
+        // 添加 TodoList 项
+        addItem(){
+            this.$prompt('请输入内容', '提示', {
+                confirmButtonText: '添加',
+                cancelButtonText: '取消',
+            }).then((value) => {
+                this.$message({
+                    type: 'success',
+                    message: '已添加代办事项'
+                })
+                console.log(value.value)
+                this.TodoList.push({name: value.value, check: false})
+            }).catch(() => {
+                this.$message({
+                    type: 'info',
+                    message: '取消添加'
+                })
+            })
+        },
+        // 删除 TodoList 项
+        removeItem(item){
+            this.TodoList.splice(item, 1)
+        },
+        // 对展示项进行筛选
+        filter(screening){
+            this.TodoListStatus = screening
+            if(screening == 'done'){
+                console.log(1)
+                this.TodoList.filter(value => value.check == true)
+                return 
+            }else if(screening == 'undone'){
+                console.log(2)
+                this.TodoList.filter(value => value.check == false)
+                return 
+            }
+            this.TodoList.filter(value => value)
+        }
     },
-    mounted(){
-        // 定时刷新数据
+    created(){
+        // 定时刷新,获取最新时间
         this.setTime()
         // 获取后台数据
         this.getState()
         this.getEcharts()
-        // ECharts 图表展示
-        this.userData()
-        this.blogData()
-        this.classifyData()
+    },
+    mounted(){
+        setTimeout(() => {
+            if(this.flag == true){
+                // ECharts 图表展示
+                this.userData(this.userEcharts)
+                this.blogData(this.blogEcharts)
+                // 声明一个数组存放获取到的文章分类信息
+                const classifyData = []
+                // 使用 for in 遍历出数据
+                for(let name in this.classifyEcharts){
+                    let value = this.classifyEcharts[name]
+                    classifyData.push({name, value})
+                }
+                this.classifyData(classifyData)
+            }else{
+                console.log('还未获取到数据', this.flag)
+            }
+        }, 500)
     }
 }
 </script>
@@ -253,7 +329,6 @@ export default {
         width: 100%;
         height: auto;
         display: flex;
-        // justify-content: left;
         // 用户卡片
         .user{
             width: 240px;
@@ -312,7 +387,7 @@ export default {
                         font-size: 23px;
                         i{
                             display: block;
-                            width: 25%;
+                            width: 78px;
                             height: 95px;
                             background-color: rgb(64, 158, 255);
                             float: left;
@@ -321,17 +396,17 @@ export default {
                             color: white;
                         }
                         div{
-                            width: 75%;
+                            width: 215px;
                             height: 90px;
                             text-align: left;
                             padding: 10px 0px 0px 65px;
                             margin: 0px 0px 0px 30px;
                             p.title{
-                                font-size: 17px;
+                                font-size: 13px;
                                 color: gray;
                             }
                             p.number{
-                                font-size: 47px;
+                                font-size: 37px;
                                 font-weight: 700;
                                 color: rgb(64, 158, 255);
                             }
@@ -369,11 +444,46 @@ export default {
         justify-content: space-around;
         // 待办事项
         .todoList{
-            width: 49%;
+            .el-card.is-always-shadow{
+                .el-card__body{
+                    ul{
+                        li{
+                            border-bottom: 1px solid gray;
+                            .el-checkbox{
+                                margin: 0px 10px 2px 0px;
+                            }
+                        }
+                    }
+                    p{
+                        font-size: 13px;
+                        float: left;
+                        line-height: 60px;
+                    }
+                    .el-button-group{
+                        margin: 10px 0px 0px 10px;
+                    }
+                }
+            }
         }
         // 最新消息
         .newData{
-            width: 49%;
+            .el-card.is-always-shadow{
+                .el-card__body{
+                    ul{
+                        li{
+                            border-bottom: 1px solid gray;
+                            padding: 0px 0px 10px 0px;
+                            p{
+                                margin: 0px 0px 2px 0px;
+                            }
+                            time{
+                                font-size: 13px;
+                                color: gray;
+                            }
+                        }
+                    }
+                }
+            }
         }
     }
 }
