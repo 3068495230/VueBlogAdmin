@@ -171,7 +171,7 @@ export default {
     margin: 0px 10px 0px 0px;
   }
   .el-table{
-    margin: 10px 0px 0px 20px;
+    margin: 0px 0px 0px 20px;
   }
   // 使用深度选择器
   /deep/ td{

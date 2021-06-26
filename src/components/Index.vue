@@ -80,12 +80,12 @@
             <div class="newData">
                 <el-card>
                     <div slot="header">
-                        <span>最新消息</span>
+                        <span>最新博客</span>
                     </div>
                     <ul>
-                        <li>
-                            <p>123</p>
-                            <time>2021/6/23</time>
+                        <li v-for="(item, key) in newBlog" :key="key">
+                            <p>{{ item.title }}</p>
+                            <time>{{ item.posttime }}</time>
                         </li>
                     </ul>
                 </el-card>
@@ -134,7 +134,9 @@ export default {
                 {name: '789', check: true}
             ],
             // 待办事项展示状态
-            TodoListStatus: 'all'
+            TodoListStatus: 'all',
+            // 最新文章数据
+            newBlog: ''
         }
     },
     computed: {
@@ -261,11 +263,14 @@ export default {
                 confirmButtonText: '添加',
                 cancelButtonText: '取消',
             }).then((value) => {
+                if(value.value == null){
+                    return false
+                }
                 this.$message({
                     type: 'success',
                     message: '已添加代办事项'
                 })
-                console.log(value.value)
+                // 添加待办项
                 this.TodoList.push({name: value.value, check: false})
             }).catch(() => {
                 this.$message({
@@ -291,6 +296,17 @@ export default {
                 return 
             }
             this.TodoList.filter(value => value)
+        },
+        // 获取最新文章
+        getNewBlog(){
+            this.$http.get('blog?_sort=posttime&_order=desc&_start=1&_limit=3').then(res => {
+                this.newBlog = res.data
+                for(let i in res.data){
+                    console.log(res.data[i].posttime)
+                }
+            }, err => {
+                console.log(err)
+            })
         }
     },
     created(){
@@ -318,6 +334,7 @@ export default {
                 console.log('还未获取到数据', this.flag)
             }
         }, 500)
+        this.getNewBlog()
     }
 }
 </script>
@@ -418,7 +435,7 @@ export default {
     }
     // 图表信息
     .echarts-adta{
-        width: 100%;
+        width: 1200px;
         height: auto;
         display: flex;
         flex-wrap: wrap;
@@ -440,10 +457,13 @@ export default {
     }
     // 待办事项与最新消息
     .todo-new{
-        display: flex;
-        justify-content: space-around;
+        width: 1200px;
         // 待办事项
         .todoList{
+            width: 590px;
+            height: auto;
+            float: left;
+            margin: 0px 10px 0px 0px;
             .el-card.is-always-shadow{
                 .el-card__body{
                     ul{
@@ -467,6 +487,9 @@ export default {
         }
         // 最新消息
         .newData{
+            width: 590px;
+            height: auto;
+            float: left;
             .el-card.is-always-shadow{
                 .el-card__body{
                     ul{
