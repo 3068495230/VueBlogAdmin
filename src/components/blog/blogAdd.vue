@@ -11,7 +11,7 @@
                     </el-form-item>
                     <el-form-item label="文章分类" prop="region">
                         <el-select v-model="ruleForm.region" placeholder="请选择文章分类">
-                            <el-option v-for="item in classify" :key="item" :label="item" :value="item"></el-option>
+                            <el-option v-for="(item, key) in classify" :key="key" :label="item.name" :value="item.name"></el-option>
                         </el-select>
                     </el-form-item>
                     <el-form-item label="文章内容" prop="content">

@@ -13,6 +13,8 @@
 </template>
 
 <script>
+// 导入富文本
+import { quillEditor } from "vue-quill-editor"
 // 工具栏配置
 const toolbarOptions = [
      // 加粗 斜体 下划线 删除线
@@ -44,8 +46,6 @@ const toolbarOptions = [
     // 上传图片
     ['image']
 ]
-// 导入富文本
-import { quillEditor } from "vue-quill-editor";
 
 export default {
     name: 'QuillEditor',
