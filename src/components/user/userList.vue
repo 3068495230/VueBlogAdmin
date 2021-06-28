@@ -87,19 +87,52 @@ export default {
             date: '2016-05-02'
           }
         ],
-        // 控制隐藏分页
-        hidePage: false
+        // 页数为 1 时是否隐藏分页
+        hidePage: false,
+        // 总条目数
+        total: 96,
+        // 总页数
+        totalPage: 100,
+        // 当前页数
+        page: 1,
+        // 每页显示数
+        pageSize: 10
       }
     },
     methods: {
-      // 获取 blog 列表
+      // 获取 用户 列表
       getUserList(){
         this.$http.get('user').then(res => {
-          this.tableData = res.data
-          console.log(this.tableData.length)
+          // 后台 blog 总条目数
+          this.total = res.data.length
+          // 后台 blog 总页数
+          this.totalPage = Math.ceil(res.data.length / this.pageSize)
         }, err => {
           console.log(err)
         })
+      },
+      // 请求每页数据
+      getBlog(page){
+        this.$http.get(`/blog?_page=${page}&_limit=${this.pageSize}`).then(res => {
+          // 获取到 blog 列表
+          this.tableData = res.data
+        }, err => {
+          console.log(err)
+        })
+      },
+      // 页码发生变化时
+      handleCurrentChange(page){
+        this.getBlog(page)
+      },
+      // 获取上一页数据
+      prev(page){
+        console.log('上一页', page, page - 1)
+        this.getBlog(page)
+      },
+      // 获取下一页数据
+      next(page){
+        console.log('下一页', page, page + 1)
+        this.getBlog(page)
       }
     },
     mounted(){

@@ -59,10 +59,11 @@
           <!-- 分页组件 -->
           <el-pagination
             background
-            layout="prev, pager, next"
+            layout="total, prev, pager, next, jumper"
             :page-size="pageSize"
             :hide-on-single-page="hidePage"
             :current-page="page"
+            :total="total"
             :page-count="totalPage"
             @current-change="handleCurrentChange"
             @prev-click="prev(page)"
@@ -116,7 +117,9 @@ export default {
           }
         ],
         // 页数为 1 时是否隐藏分页
-        hidePage: true,
+        hidePage: false,
+        // 总条目数
+        total: 96,
         // 总页数
         totalPage: 100,
         // 当前页数
@@ -126,32 +129,44 @@ export default {
       }
     },
     methods: {
-      // 获取 blog 列表
-      getBlogList(page){
+      // 获取分页初始化数据
+      getBlogList(){
         this.$http.get(`blog`).then(res => {
+          // 后台 blog 总条目数
+          this.total = res.data.length
+          // 后台 blog 总页数
+          this.totalPage = Math.ceil(res.data.length / this.pageSize)
+        }, err => {
+          console.log(err)
+        })
+      },
+      // 请求每页数据
+      getBlog(page){
+        this.$http.get(`/blog?_page=${page}&_limit=${this.pageSize}`).then(res => {
           // 获取到 blog 列表
           this.tableData = res.data
-          // 后台 blog 总页数
-          this.totalPage = Math.ceil(this.tableData.length / this.pageSize)
         }, err => {
           console.log(err)
         })
       },
       // 页码发生变化时
       handleCurrentChange(page){
-        console.log('切换分页了', page)
+        this.getBlog(page)
       },
       // 获取上一页数据
       prev(page){
         console.log('上一页', page, page - 1)
+        this.getBlog(page)
       },
       // 获取下一页数据
       next(page){
         console.log('下一页', page, page + 1)
+        this.getBlog(page)
       }
     },
     mounted(){
-      this.getBlogList(this.page)
+      this.getBlogList()
+      this.getBlog(this.page)
     }
   }
 </script>
