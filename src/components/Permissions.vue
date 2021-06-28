@@ -30,6 +30,7 @@ export default {
         }
     },
     methods:{
+        // 切换权限验证信息
         permissions(value){
             if(value == 0){
                 // 判断是否不用切换

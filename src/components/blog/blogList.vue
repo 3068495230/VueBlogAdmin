@@ -1,36 +1,75 @@
+<!--
+ * @Description: 文件描述
+ * @Author: CY小尘s
+ * @Date: 2021-06-26 15:10:04
+ * @LastEditTime: 2021-06-27 16:24:31
+ * @LastEditors: 学习
+-->
 <template>
     <div class="blogList">
-        <el-table
+      <el-tabs type="border-card">
+        <el-tab-pane label="博客列表">
+          <el-table
             :data="tableData"
             border
-            style="width: 100%">
+            >
             <el-table-column
-                prop="name"
-                label="姓名"
-                width="120">
+                prop="id"
+                label="id"
+                width="50"
+                align="center">
             </el-table-column>
             <el-table-column
-                prop="sex"
-                label="性别"
-                width="120">
+                prop="title"
+                label="文章名"
+                width="120"
+                align="center">
             </el-table-column>
             <el-table-column
-                fixed
-                prop="date"
-                label="注册日期"
-                width="150">
+                prop="content"
+                label="文章简介"
+                width="200"
+                :show-overflow-tooltip='true'>
+            </el-table-column>
+            <el-table-column
+                prop="author"
+                label="作者"
+                width="120"
+                align="center">
+            </el-table-column>
+            <el-table-column
+                prop="posttime"
+                label="发表日期"
+                width="150"
+                align="center">
             </el-table-column>
             <el-table-column
                 label="操作"
-                width="70">
+                width="70"
+                align="center">
                 <el-button type="text" size="small">编辑</el-button>
             </el-table-column>
             <el-table-column
                 label="操作"
-                width="70">
+                width="70"
+                align="center">
                 <el-button type="text" size="small">删除</el-button>
             </el-table-column>
-        </el-table>
+          </el-table>
+          <!-- 分页组件 -->
+          <el-pagination
+            background
+            layout="prev, pager, next"
+            :page-size="pageSize"
+            :hide-on-single-page="hidePage"
+            :current-page="page"
+            :page-count="totalPage"
+            @current-change="handleCurrentChange"
+            @prev-click="prev(page)"
+            @next-click="next(page)">
+          </el-pagination>
+        </el-tab-pane>
+      </el-tabs>
     </div>
 </template>
 
@@ -39,31 +78,96 @@ export default {
     name: 'blogList',
     data() {
       return {
-        tableData: [{
-          name: '王小虎',
-          sex: '男',
-          date: '2016-05-02'
-        }, {
-          date: '2016-05-04',
-          name: '王小虎',
-          sex: '男'
-        }, {
-          date: '2016-05-01',
-          name: '王小虎',
-          sex: '男'
-        }, {
-          date: '2016-05-03',
-          name: '王小虎',
-          sex: '男'
-        }]
+        tableData: [
+          {
+            id: 1,
+            title: '王小虎',
+            content: 'nih12312312331221ao',
+            author: 'wag',
+            posttime: '2016-05-02'
+          },
+          {
+            id: 1,
+            title: '王小虎',
+            content: 'nih12312312331221ao',
+            author: 'wag',
+            posttime: '2016-05-02'
+          },
+          {
+            id: 1,
+            title: '王小虎',
+            content: 'nih12312312331221ao',
+            author: 'wag',
+            posttime: '2016-05-02'
+          },
+          {
+            id: 1,
+            title: '王小虎',
+            content: 'nih12312312331221ao',
+            author: 'wag',
+            posttime: '2016-05-02'
+          },
+          {
+            id: 1,
+            title: '王小虎',
+            content: 'nih12312312331221ao',
+            author: 'wag',
+            posttime: '2016-05-02'
+          }
+        ],
+        // 页数为 1 时是否隐藏分页
+        hidePage: true,
+        // 总页数
+        totalPage: 100,
+        // 当前页数
+        page: 1,
+        // 每页显示数
+        pageSize: 10
       }
     },
     methods: {
-        
+      // 获取 blog 列表
+      getBlogList(page){
+        this.$http.get(`blog`).then(res => {
+          // 获取到 blog 列表
+          this.tableData = res.data
+          // 后台 blog 总页数
+          this.totalPage = Math.ceil(this.tableData.length / this.pageSize)
+        }, err => {
+          console.log(err)
+        })
+      },
+      // 页码发生变化时
+      handleCurrentChange(page){
+        console.log('切换分页了', page)
+      },
+      // 获取上一页数据
+      prev(page){
+        console.log('上一页', page, page - 1)
+      },
+      // 获取下一页数据
+      next(page){
+        console.log('下一页', page, page + 1)
+      }
     },
+    mounted(){
+      this.getBlogList(this.page)
+    }
   }
 </script>
 
 <style lang="less" scoped>
-
+.blogList{
+  .el-tabs{
+    .el-table{
+      width: 1000px;
+      /deep/ .el-table__body-wrapper{
+        width: 1000px;
+      }
+    }
+    .el-pagination.is-background{
+      margin: 15px 0px 0px 0px;
+    }
+  }
+}
 </style>

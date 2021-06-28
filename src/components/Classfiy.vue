@@ -23,7 +23,8 @@
             <el-table-column
                 prop="name"
                 label="分类名称"
-                width="158">
+                width="158"
+                align="center">
             </el-table-column>
             <el-table-column
                 label="操作"

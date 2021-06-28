@@ -60,7 +60,7 @@
                     </div>
                     <!-- 待办事项列表 -->
                     <ul>
-                        <li v-for="(item, key) in TodoList" :key="key">
+                        <li v-for="(item, key) in TodoListFilter" :key="key">
                             <el-checkbox v-model="item.check">
                                 <span>{{ item.name }}</span>
                             </el-checkbox>
@@ -84,7 +84,7 @@
                     </div>
                     <ul>
                         <li v-for="(item, key) in newBlog" :key="key">
-                            <p>{{ item.title }}</p>
+                            <p @click="blog()">{{ item.title }}</p>
                             <time>{{ item.posttime }}</time>
                         </li>
                     </ul>
@@ -95,7 +95,7 @@
 </template>
 
 <script>
-// 引入公有函数 time 
+// 引入公有函数 time
 import date from '../assets/js/time'
 // 引入 Echarts 图表
 import * as echarts from 'echarts'
@@ -133,6 +133,8 @@ export default {
                 {name: '456', check: false},
                 {name: '789', check: true}
             ],
+            // 待办事项筛选结果
+            TodoListFilter: '',
             // 待办事项展示状态
             TodoListStatus: 'all',
             // 最新文章数据
@@ -182,7 +184,7 @@ export default {
                 },
                 xAxis: {
                     type: 'category',
-                    data: ["22", '23', '24', '25', '26'] 
+                    data: ["22", '23', '24', '25', '26']
                 },
                 yAxis: {
                     type: 'value'
@@ -285,27 +287,31 @@ export default {
         },
         // 对展示项进行筛选
         filter(screening){
+            // 更改展示按钮
             this.TodoListStatus = screening
             if(screening == 'done'){
-                console.log(1)
-                this.TodoList.filter(value => value.check == true)
-                return 
+                this.TodoListFilter = this.TodoList.filter(value => value.check == true)
+                return
             }else if(screening == 'undone'){
-                console.log(2)
-                this.TodoList.filter(value => value.check == false)
-                return 
+                this.TodoListFilter = this.TodoList.filter(value => value.check == false)
+                return
             }
-            this.TodoList.filter(value => value)
+            // 如果不是 done、undone，亦或者传进来了其他参数，都直接输出全部
+            this.TodoListFilter = this.TodoList.filter(value => value)
         },
         // 获取最新文章
         getNewBlog(){
             this.$http.get('blog?_sort=posttime&_order=desc&_start=1&_limit=3').then(res => {
                 this.newBlog = res.data
-                for(let i in res.data){
-                    console.log(res.data[i].posttime)
-                }
             }, err => {
                 console.log(err)
+            })
+        },
+        // 点击观看文章
+        blog(){
+            this.$message({
+                type: 'success',
+                message: '还木有连接前端页面哦~无法跳转到前端进行文章查看~'
             })
         }
     },
@@ -317,6 +323,7 @@ export default {
         this.getEcharts()
     },
     mounted(){
+        // 进行延迟加载 Echarts 图表
         setTimeout(() => {
             if(this.flag == true){
                 // ECharts 图表展示
@@ -335,6 +342,9 @@ export default {
             }
         }, 500)
         this.getNewBlog()
+        //
+        this.TodoListFilter = this.TodoList
+        console.log(this.TodoListFilter)
     }
 }
 </script>
@@ -385,7 +395,6 @@ export default {
         }
         // 数据卡片
         .msg{
-            width: 100%;
             .el-row{
                 width: 100%;
                 height: 95px;
@@ -452,7 +461,7 @@ export default {
         #classify-data{
             width: 350px;
             height: 300px;
-            
+
         }
     }
     // 待办事项与最新消息
@@ -498,6 +507,11 @@ export default {
                             padding: 0px 0px 10px 0px;
                             p{
                                 margin: 0px 0px 2px 0px;
+                                cursor: pointer;
+                                color: rgb(64, 158, 255);
+                            }
+                            p:hover{
+                                opacity: 0.7;
                             }
                             time{
                                 font-size: 13px;

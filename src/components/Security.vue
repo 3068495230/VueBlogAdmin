@@ -317,6 +317,7 @@ export default {
       }
     },
     mounted(){
+      // 模板挂载时获取后台用户信息
       this.getUser()
     }
   }

@@ -16,7 +16,7 @@
             </el-form-item>
             <!-- 密码 -->
             <el-form-item label="确认密码" prop="passwords">
-                <el-input type="password" v-model="ruleForm.passwords" autocomplete="off" maxlength="11"></el-input>
+                <el-input type="password" v-model="ruleForm.passwords" maxlength="11"></el-input>
             </el-form-item>
             <!-- 邮箱 -->
             <el-form-item label="Email:" prop="email" required>
@@ -43,6 +43,9 @@
 </template>
 
 <script>
+// 引入公有函数 time 获取当前时间
+import time from '../../assets/js/time.js'
+
 export default {
     name: 'userAdd',
     data(){
@@ -139,6 +142,7 @@ export default {
               password: this.ruleForm.passwords,
               email: this.email,
               phone: this.phone,
+              date: time.newDate(),
               permissions: this.ruleForm.permissions
           }
           // 发送请求
