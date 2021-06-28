@@ -1,5 +1,7 @@
 # gm
 
+使用 Vue + element-ui 制作的后台模板
+
 ## Project setup
 ```
 npm install
