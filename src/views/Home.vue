@@ -2,7 +2,7 @@
  * @Description: 首页
  * @Author: CY小尘s
  * @Date: 2021-04-13 09:50:37
- * @LastEditTime: 2021-04-16 09:57:54
+ * @LastEditTime: 2021-06-29 10:46:22
  * @LastEditors: 学习
 -->
 <template>
@@ -43,7 +43,7 @@ export default {
   },
   data(){
     return{
-      
+
     }
   },
   // 方法
@@ -66,7 +66,6 @@ export default {
 }
 /* 布局 */
 .home{
-
   // height: 500px;
   /* 布局：左侧样式 */
   .el-aside {

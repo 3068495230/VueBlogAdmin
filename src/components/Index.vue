@@ -323,7 +323,7 @@ export default {
         this.getEcharts()
     },
     mounted(){
-        // 进行延迟加载 Echarts 图表
+        // 延迟加载 Echarts 图表
         setTimeout(() => {
             if(this.flag == true){
                 // ECharts 图表展示
@@ -341,10 +341,10 @@ export default {
                 console.log('还未获取到数据', this.flag)
             }
         }, 500)
+        // 获取最新 blog
         this.getNewBlog()
-        //
+        // 将原待办事项赋予过滤待办事项过滤器
         this.TodoListFilter = this.TodoList
-        console.log(this.TodoListFilter)
     }
 }
 </script>

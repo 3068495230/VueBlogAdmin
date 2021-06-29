@@ -5,9 +5,8 @@
       v-model="content"
       ref="myQuillEditor"
       :options="editorOption"
-      @blur="onEditorBlur($event)"
-      @focus="onEditorFocus($event)"
       @change="onEditorChange($event)"
+      @ready="onEditorReady($event)"
     ></quill-editor>
   </div>
 </template>
@@ -52,32 +51,31 @@ export default {
     components: {
         quillEditor
     },
+    props: ['value'],
     data() {
-      return {
-          content: '',
-              editorOption: {
-                  placeholder: "",
-                  theme: "snow", // 
-                  placeholder: "输入内容",
-                  modules: {
-                      toolbar: {
-                          container: toolbarOptions,
-                      }
-                  }
-              },
-          }
-      },
+        return {
+            content: '',
+            editorOption: {
+                placeholder: "",
+                theme: "snow", //
+                placeholder: "输入内容",
+                modules: {
+                    toolbar: {
+                        container: toolbarOptions,
+                    }
+                }
+            }
+        }
+    },
     methods: {
-        onEditorBlur() {
-
-        },
-        onEditorFocus() {
-
-        },
         onEditorChange() {
           // 调佣父组件方法，实现自子组件向父组件传值
           this.$emit('content', this.content)
         },
+        onEditorReady(dom)  {
+          // 在ready方法中手动赋值
+          this.content = this.value
+      }
     }
 }
 </script>

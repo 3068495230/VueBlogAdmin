@@ -2,7 +2,7 @@
  * @Description: 文件描述
  * @Author: CY小尘s
  * @Date: 2021-04-11 17:46:07
- * @LastEditTime: 2021-04-16 09:41:50
+ * @LastEditTime: 2021-06-29 10:45:10
  * @LastEditors: 学习
  */
 import Vue from "vue";
@@ -60,7 +60,7 @@ const routes = [
             meta: {
               title: '用户列表'
             },
-            component: () => import('../components/User/userList.vue'),
+            component: () => import('../components/user/userList.vue'),
           },
           {
             path: '/user/userAdd',
@@ -68,7 +68,7 @@ const routes = [
             meta: {
               title: '用户添加'
             },
-            component: () => import('../components/User/userAdd.vue'),
+            component: () => import('../components/user/userAdd.vue'),
           }
         ],
       },
@@ -88,7 +88,7 @@ const routes = [
             meta: {
               title: '文章列表'
             },
-            component: () => import('../components/Blog/blogList.vue')
+            component: () => import('../components/blog/blogList.vue')
           },
           {
             path: '/blog/blogAdd',
@@ -96,7 +96,7 @@ const routes = [
             meta: {
               title: '文章添加'
             },
-            component: () => import('../components/Blog/blogAdd.vue')
+            component: () => import('../components/blog/blogAdd.vue')
           }
         ]
       },
@@ -115,7 +115,7 @@ const routes = [
             meta: {
               title: '401 页面'
             },
-            component: () => import('../components/Error/401.vue')
+            component: () => import('../components/error/401.vue')
           },
           {
             path: '/error/404',
@@ -123,7 +123,7 @@ const routes = [
             meta: {
               title: '404 页面'
             },
-            component: () => import('../components/Error/404.vue')
+            component: () => import('../components/error/404.vue')
           }
         ]
       },

@@ -2,7 +2,7 @@
  * @Description: 文件描述
  * @Author: CY小尘s
  * @Date: 2021-06-26 15:10:04
- * @LastEditTime: 2021-06-27 16:24:31
+ * @LastEditTime: 2021-06-29 17:27:17
  * @LastEditors: 学习
 -->
 <template>
@@ -26,10 +26,20 @@
                 align="center">
             </el-table-column>
             <el-table-column
+                prop="classify"
+                label="分类"
+                width="100"
+                align="center">
+            </el-table-column>
+            <el-table-column
                 prop="content"
                 label="文章简介"
                 width="200"
-                :show-overflow-tooltip='true'>
+                show-overflow-tooltip>
+                <!-- 使用插槽显示内容，将 html 标签解析 -->
+                <template slot-scope="scope">
+                  <div v-html="scope.row.content"></div>
+                </template>
             </el-table-column>
             <el-table-column
                 prop="author"
@@ -47,13 +57,19 @@
                 label="操作"
                 width="70"
                 align="center">
-                <el-button type="text" size="small">编辑</el-button>
+                <template slot-scope="scope">
+                  <el-button type="text"
+                    @click.native.prevent="editor(scope.row)">编辑</el-button>
+                </template>
             </el-table-column>
             <el-table-column
                 label="操作"
                 width="70"
                 align="center">
-                <el-button type="text" size="small">删除</el-button>
+                <template slot-scope="scope">
+                  <el-button type="text"
+                    @click.native.prevent="del(scope.row)">删除</el-button>
+                </template>
             </el-table-column>
           </el-table>
           <!-- 分页组件 -->
@@ -71,14 +87,26 @@
           </el-pagination>
         </el-tab-pane>
       </el-tabs>
+
+      <!-- 弹框 -->
+      <el-dialog title="编辑博客" center :append-to-body='true' :lock-scroll="false" :visible.sync="dialogShow" width="800px">
+        <editorDialog :editorContent="editorContent"></editorDialog>
+      </el-dialog>
+
     </div>
 </template>
 
 <script>
+import editorDialog from './editorDialog.vue'
+
 export default {
     name: 'blogList',
+    components: {
+      editorDialog,
+    },
     data() {
       return {
+        // 默认数据
         tableData: [
           {
             id: 1,
@@ -125,7 +153,11 @@ export default {
         // 当前页数
         page: 1,
         // 每页显示数
-        pageSize: 10
+        pageSize: 10,
+        // 控制弹框是否显示
+        dialogShow: false,
+        // 传给编辑框的文章内容
+        editorContent: ''
       }
     },
     methods: {
@@ -162,10 +194,44 @@ export default {
       next(page){
         console.log('下一页', page, page + 1)
         this.getBlog(page)
+      },
+      // 进入编辑文章
+      editor(index){
+        // 显示弹框
+        this.dialogShow = true
+        // 将博客内容传给编辑框
+        this.editorContent = index
+      },
+      // 删除
+      del(index){
+        this.$confirm('是否删除文章?', '提示', {
+          confirmButtonText: '确定',
+          cancelButtonText: '取消',
+          type: 'warning'
+        }).then(() => {
+          this.$message({
+            type: 'success',
+            message: '删除成功!'
+          })
+          // 发送删除请求
+          this.$http.delete(`blog/${index.id}`).then(res => {
+            // 删除完成后刷新页面
+            location.reload()
+          }, err => {
+            console.log(err)
+          })
+        }).catch(() => {
+          this.$message({
+            type: 'info',
+            message: '已取消删除'
+          })
+        })
       }
     },
     mounted(){
+      // 获取分页初始信息
       this.getBlogList()
+      // 获取每页数据
       this.getBlog(this.page)
     }
   }
@@ -173,11 +239,17 @@ export default {
 
 <style lang="less" scoped>
 .blogList{
+  width: 1000px;
   .el-tabs{
     .el-table{
       width: 1000px;
       /deep/ .el-table__body-wrapper{
         width: 1000px;
+      }
+      /deep/ td p, div{
+        overflow: hidden;
+        text-overflow: ellipsis;
+        white-space: nowrap;
       }
     }
     .el-pagination.is-background{

@@ -7,46 +7,50 @@
             </el-form-item>
         </el-form>
         <el-button type="primary" @click="add('ruleForm')">添加分类</el-button>
-        <!-- 分类表格 -->
-        <el-table
-            :data="tableData"
-            border
-            style="width: 345px">
-            <!-- 分类id -->
-            <el-table-column
-                prop="id"
-                label="id"
-                width="45"
-                align="center">
-            </el-table-column>
-            <!-- 分类名 -->
-            <el-table-column
-                prop="name"
-                label="分类名称"
-                width="158"
-                align="center">
-            </el-table-column>
-            <el-table-column
-                label="操作"
-                width="70"
-                align="center">
-                <!-- 编辑按钮，使用插槽将对应行的数据信息传过去 -->
-                <template slot-scope="scope">
-                  <el-button type="text" size="small"
-                    @click.native.prevent="editor(scope.row)">编辑</el-button>
-                </template>
-            </el-table-column>
-            <el-table-column
-                label="操作"
-                width="70"
-                align="center">
-                <!-- 删除按钮，使用插槽将对应行的数据信息传过去 -->
-                <template slot-scope="scope">
-                  <el-button type="text" size="small"
-                    @click.native.prevent="del(scope.row)">删除</el-button>
-                </template>
-            </el-table-column>
-        </el-table>
+        <el-tabs type="border-card">
+          <el-tab-pane label="分类列表">
+            <!-- 分类表格 -->
+            <el-table
+                :data="tableData"
+                border
+                style="width: 345px">
+                <!-- 分类id -->
+                <el-table-column
+                    prop="id"
+                    label="id"
+                    width="45"
+                    align="center">
+                </el-table-column>
+                <!-- 分类名 -->
+                <el-table-column
+                    prop="name"
+                    label="分类名称"
+                    width="158"
+                    align="center">
+                </el-table-column>
+                <el-table-column
+                    label="操作"
+                    width="70"
+                    align="center">
+                    <!-- 编辑按钮，使用插槽将对应行的数据信息传过去 -->
+                    <template slot-scope="scope">
+                      <el-button type="text" size="small"
+                        @click.native.prevent="editor(scope.row)">编辑</el-button>
+                    </template>
+                </el-table-column>
+                <el-table-column
+                    label="操作"
+                    width="70"
+                    align="center">
+                    <!-- 删除按钮，使用插槽将对应行的数据信息传过去 -->
+                    <template slot-scope="scope">
+                      <el-button type="text" size="small"
+                        @click.native.prevent="del(scope.row)">删除</el-button>
+                    </template>
+                </el-table-column>
+            </el-table>
+          </el-tab-pane>
+        </el-tabs>
     </div>
 </template>
 
@@ -72,6 +76,7 @@ export default {
       }
     },
     methods: {
+        // 获取分类信息
         getClassify(){
           this.$http.get('/classify').then(res => {
             const arr = []
@@ -132,7 +137,7 @@ export default {
                 })
             })
         },
-        // 删除分类 
+        // 删除分类
         del(index){
           this.$confirm('是否删除分类?', '提示', {
             confirmButtonText: '确定',

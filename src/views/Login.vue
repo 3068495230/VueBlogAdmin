@@ -2,7 +2,7 @@
  * @Description: 登录页
  * @Author: CY小尘s
  * @Date: 2021-04-11 17:46:07
- * @LastEditTime: 2021-04-16 10:10:26
+ * @LastEditTime: 2021-06-29 10:47:23
  * @LastEditors: 学习
 -->
 <template>
@@ -101,6 +101,9 @@ export default {
 .login{
   width: 400px;
   height: 100%;
+  h1{
+    margin: 20px 0px 20px 0px;
+  }
   .el-form{
     .el-form-item{
       .el-form-item__content{

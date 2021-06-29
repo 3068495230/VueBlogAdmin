@@ -16,7 +16,7 @@
                     </el-form-item>
                     <el-form-item label="文章内容" prop="content">
                         <!-- 富文本 -->
-                        <Quill @content='content' :reset="value"></Quill>
+                        <Quill @content='content'></Quill>
                     </el-form-item>
                 </el-form>
                 <!-- 提交按钮 -->
@@ -76,16 +76,17 @@ export default {
                     }
                     this.$http.post('blog', data).then(res => {
                         console.log(res)
-                        // 重置输入内容
-                        this.$refs[formName].resetFields()
-                        console.log()
-                       alert('添加成功！')
+                        // 刷新页面
+                        location.reload()
+                        this.$message({
+                            message: '添加成功！',
+                            type: 'success'
+                        })
                     }, err => {
                         console.log(err)
                     })
-                } else {
-                    console.log('提交出错！')
-                    return false
+                }else{
+                    this.$message.error('提交出错!')
                 }
             })
         },
