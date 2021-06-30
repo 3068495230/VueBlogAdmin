@@ -2,7 +2,7 @@
  * @Description: 用户信息编辑框
  * @Author: CY小尘s
  * @Date: 2021-06-29 23:06:37
- * @LastEditTime: 2021-06-30 11:11:46
+ * @LastEditTime: 2021-06-30 15:23:44
  * @LastEditors: 学习
 -->
 <!--
@@ -175,10 +175,6 @@ export default {
                     this.$message.error('修改出错!')
                 }
             })
-        },
-        // 获取富文本内容
-        content(value){
-            this.ruleForm.content = value
         }
     }
 }

@@ -159,13 +159,15 @@ export default {
             this.$refs[formName].resetFields()
           }, err => {
             this.$message({
-              message: '添加成功！',
+              message: '添加失败！',
               type: 'error'
             })
           })
         }else{
-
-          return false
+          this.$message({
+            message: '验证失败...输入不合法！',
+            type: 'error'
+          })
         }
       })
     }

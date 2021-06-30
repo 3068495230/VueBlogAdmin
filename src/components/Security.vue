@@ -28,7 +28,7 @@
             <p>账号：</p>
           </el-col>
           <el-col :span="1">
-            <span :style="name == '网络错误' ? 'color:red' : ''">{{ account }}</span>
+            <span :style="account == '网络错误' ? 'color:red' : ''">{{ account }}</span>
           </el-col>
         </el-row>
         <!-- 邮箱 -->
@@ -37,7 +37,7 @@
             <p>邮箱：</p>
           </el-col>
           <el-col :span="1">
-            <span :style="name == '网络错误' ? 'color:red' : ''">{{ email }}</span>
+            <span :style="email == '网络错误' ? 'color:red' : ''">{{ email }}</span>
           </el-col>
         </el-row>
         <!-- 手机号 -->
@@ -46,7 +46,7 @@
             <p>手机号：</p>
           </el-col>
           <el-col :span="1">
-            <span :style="name == '网络错误' ? 'color:red' : ''">{{ phone }}</span>
+            <span :style="phone == '网络错误' ? 'color:red' : ''">{{ phone }}</span>
           </el-col>
         </el-row>
         <!-- 注销 -->
@@ -295,10 +295,20 @@ export default {
       },
       // 注销账号（退出登录）
       goBack(){
+        this.$confirm('确定要退出吗?', '提示', {
+          confirmButtonText: '确定',
+          cancelButtonText: '取消',
+          type: 'warning'
+        }).then(() => {
           // 跳转到登录页面
           this.$router.push('/login')
           // 移除保存本地的 用户信息
           sessionStorage.removeItem('account')
+          this.$message({
+            type: 'info',
+            message: '已退出...'
+          })
+        })
       },
       // 获取当前登录者信息
       getUser(){

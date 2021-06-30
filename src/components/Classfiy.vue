@@ -105,6 +105,10 @@ export default {
             this.$refs[formName].resetFields()
             // 获取最新分类信息
             this.getClassify()
+            this.$message({
+              message: '添加成功！',
+              type: 'success'
+            })
           }, err => {
             console.log(err)
           })

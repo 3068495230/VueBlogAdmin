@@ -2,7 +2,7 @@
  * @Description: 登录页
  * @Author: CY小尘s
  * @Date: 2021-04-11 17:46:07
- * @LastEditTime: 2021-06-29 10:47:23
+ * @LastEditTime: 2021-06-30 17:04:25
  * @LastEditors: 学习
 -->
 <template>
@@ -16,7 +16,7 @@
       </el-form-item>
       <!-- 验证密码 -->
       <el-form-item label="密码" prop="password">
-        <el-input type="password" v-model="ruleForm.password"></el-input>
+        <el-input type="password" v-model="ruleForm.password" @keyup.enter.native="login()"></el-input>
       </el-form-item>
       <!-- 登录按钮 -->
       <el-form-item>

@@ -163,9 +163,9 @@ export default {
       // 获取分页初始化数据
       getPage(){
         this.$http.get(`user`).then(res => {
-          // 后台 用户 总条目数
+          // 后台用户总条目数
           this.total = res.data.length
-          // 后台 用户 总页数
+          // 后台用户总页数
           this.totalPage = Math.ceil(res.data.length / this.pageSize)
         }, err => {
           console.log(err)
@@ -174,7 +174,7 @@ export default {
       // 请求每页数据
       getUser(page){
         this.$http.get(`/user?_page=${page}&_limit=${this.pageSize}`).then(res => {
-          // 获取到 blog 列表
+          // 获取到用户列表
           this.tableData = res.data
         }, err => {
           console.log(err)
@@ -186,11 +186,11 @@ export default {
       },
       // 获取上一页数据
       prev(page){
-        this.getBlog(page)
+        this.getUser(page)
       },
       // 获取下一页数据
       next(page){
-        this.getBlog(page)
+        this.getUser(page)
       },
       // 进入编辑用户
       editor(index){
