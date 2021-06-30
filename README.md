@@ -47,11 +47,14 @@
     存放 Echarts 图表数据
 # 使用教程
 ## 克隆项目
+```
 git clone https://gitee.com/qingchen666/vue-blog-admin.git
+```
 ## 在克隆的文件夹下安装配置文件
 ```
 npm install
 ```
 ## 运行（建议在 Vue ui 中调试运行）
+```
 npm run serve
 ```
