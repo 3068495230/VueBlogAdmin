@@ -6,8 +6,8 @@
  * @LastEditors: 学习
 -->
 # 导言
-    想着前端部分都已经做了，何不将后台页也一并写了？正好攒攒项目实战经验。
-    制作思路记过程：https://www.yuque.com/docs/share/32a32952-bfbe-4a7a-9ad8-6e4caa3c3db4?
+想着前端部分都已经做了，何不将后台页也一并写了？正好攒攒项目实战经验。
+制作思路记过程：https://www.yuque.com/docs/share/32a32952-bfbe-4a7a-9ad8-6e4caa3c3db4?
 ## 分支说明
 - master：默认分支，是原版后台，后台数据使用 json-server 模拟的。
 - dev：去除了 json-server、axios 的版本，数据都是固定的，主要用于搭建静态网站。
