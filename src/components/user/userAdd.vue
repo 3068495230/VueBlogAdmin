@@ -1,5 +1,7 @@
 <template>
-    <div class="userAdd">
+  <div class="userAdd">
+    <el-tabs type="border-card">
+      <el-tab-pane label="添加用户">
         <!-- element-ui 表单验证添加账号信息 -->
         <el-form :model="ruleForm" :rules="rules" ref="ruleForm" label-width="100px" class="demo-ruleForm">
             <!-- 昵称 -->
@@ -39,6 +41,8 @@
                 <el-button type="primary" @click="addAccount('ruleForm')">添加</el-button>
             </el-form-item>
         </el-form>
+      </el-tab-pane>
+    </el-tabs>
     </div>
 </template>
 
@@ -140,21 +144,27 @@ export default {
               name: this.ruleForm.name,
               account: this.ruleForm.account,
               password: this.ruleForm.passwords,
-              email: this.email,
-              phone: this.phone,
+              email: this.ruleForm.email,
+              phone: this.ruleForm.phone,
               date: time.newDate(),
               permissions: this.ruleForm.permissions
           }
           // 发送请求
-          this.$http.post('/user', data).then(res => {
-            alert('添加成功！')
+          this.$http.post('user', data).then(res => {
+            this.$message({
+              message: '添加成功！',
+              type: 'success'
+            })
             // 清空输入框内容
             this.$refs[formName].resetFields()
           }, err => {
-            console.log('请求出错！', err)
+            this.$message({
+              message: '添加成功！',
+              type: 'error'
+            })
           })
         }else{
-          alert('请按要求填写账号数据!')
+
           return false
         }
       })
@@ -165,7 +175,7 @@ export default {
 
 <style lang="less" scope>
 .userAdd{
-  width: 400px;
+  width: 530px;
   height: 100%;
   .el-form{
     .el-form-item{

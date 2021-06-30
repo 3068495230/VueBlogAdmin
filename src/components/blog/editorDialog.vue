@@ -2,7 +2,7 @@
  * @Description: 弹框编辑组件
  * @Author: CY小尘s
  * @Date: 2021-06-29 12:00:50
- * @LastEditTime: 2021-06-29 17:18:41
+ * @LastEditTime: 2021-06-29 23:02:06
  * @LastEditors: 学习
 -->
 <template>
@@ -31,8 +31,6 @@
 <script>
 // 引入富文本
 import Quill from './quill.vue'
-// 引入公有函数 time 获取当前时间
-import time from '../../assets/js/time.js'
 
 export default {
     name: 'editorDialog',

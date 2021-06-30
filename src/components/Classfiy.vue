@@ -182,8 +182,8 @@ export default {
   // 使用深度选择器
   /deep/ td{
     padding: 0px;
-    height: 40px;
-    line-height: 40px;
+    height: 50px;
+    line-height: 50px;
   }
 }
 </style>

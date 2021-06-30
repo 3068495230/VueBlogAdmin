@@ -22,21 +22,13 @@
     },
     {
       "id": 2,
-      "name": "xuyunhans",
-      "account": "xuyunhans",
-      "password": 3068495230,
+      "name": "一切无所谓",
+      "account": "1115894132",
+      "password": "123456",
       "email": "115892630@qq.com",
-      "phone": "177794862031",
+      "phone": "18873427078",
       "date": "2021-6-28",
       "permissions": 2
-    },
-    {
-      "name": "士大夫",
-      "account": "456466",
-      "password": "123456",
-      "date": "2021-06-28",
-      "permissions": "2",
-      "id": 3
     }
   ],
   "classify": [
@@ -100,9 +92,9 @@
     },
     {
       "id": 0,
-      "title": "出现了BUG",
+      "title": "出现了BUG：BUG 已修复",
       "posttime": "2021-01-01",
-      "content": "<p>默认内容并不会更新，而是会和之前一样</p>",
+      "content": "<p>默认内容并不会更新，而是会和之前一样：已经会自动更新了</p>",
       "classify": "Vue",
       "author": "单区再因。"
     },

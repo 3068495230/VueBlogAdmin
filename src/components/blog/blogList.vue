@@ -2,7 +2,7 @@
  * @Description: 文件描述
  * @Author: CY小尘s
  * @Date: 2021-06-26 15:10:04
- * @LastEditTime: 2021-06-29 17:27:17
+ * @LastEditTime: 2021-06-30 11:07:51
  * @LastEditors: 学习
 -->
 <template>
@@ -16,13 +16,13 @@
             <el-table-column
                 prop="id"
                 label="id"
-                width="50"
+                width="70"
                 align="center">
             </el-table-column>
             <el-table-column
                 prop="title"
                 label="文章名"
-                width="120"
+                width="200"
                 align="center">
             </el-table-column>
             <el-table-column
@@ -90,7 +90,7 @@
 
       <!-- 弹框 -->
       <el-dialog title="编辑博客" center :append-to-body='true' :lock-scroll="false" :visible.sync="dialogShow" width="800px">
-        <editorDialog :editorContent="editorContent"></editorDialog>
+        <editorDialog v-if="dialogShow" :editorContent="editorContent"></editorDialog>
       </el-dialog>
 
     </div>
@@ -162,7 +162,7 @@ export default {
     },
     methods: {
       // 获取分页初始化数据
-      getBlogList(){
+      getPage(){
         this.$http.get(`blog`).then(res => {
           // 后台 blog 总条目数
           this.total = res.data.length
@@ -187,12 +187,10 @@ export default {
       },
       // 获取上一页数据
       prev(page){
-        console.log('上一页', page, page - 1)
         this.getBlog(page)
       },
       // 获取下一页数据
       next(page){
-        console.log('下一页', page, page + 1)
         this.getBlog(page)
       },
       // 进入编辑文章
@@ -230,8 +228,8 @@ export default {
     },
     mounted(){
       // 获取分页初始信息
-      this.getBlogList()
-      // 获取每页数据
+      this.getPage()
+      // 获取博客每页数据
       this.getBlog(this.page)
     }
   }
@@ -239,13 +237,21 @@ export default {
 
 <style lang="less" scoped>
 .blogList{
-  width: 1000px;
+  width: 1010px;
   .el-tabs{
+    width: 1010px;
     .el-table{
-      width: 1000px;
+      width: 1010px;
       /deep/ .el-table__body-wrapper{
-        width: 1000px;
+        width: 1010px;
       }
+      // 使用深度选择器
+      /deep/ td{
+        padding: 0px;
+        height: 50px;
+        line-height: 50px;
+      }
+      // 文章简介超出时显示省略号
       /deep/ td p, div{
         overflow: hidden;
         text-overflow: ellipsis;
