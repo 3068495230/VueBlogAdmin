@@ -2,7 +2,7 @@
  * @Description: admin 后台描述文件
  * @Author: CY小尘s
  * @Date: 2021-06-29 00:00:13
- * @LastEditTime: 2021-07-01 00:47:32
+ * @LastEditTime: 2021-07-01 00:58:12
  * @LastEditors: 学习
 -->
 # 导言
@@ -44,3 +44,17 @@
     存放后台的数据
 ### echarts
     存放 Echarts 图表数据
+# 使用教程
+## 克隆项目
+git clone https://gitee.com/qingchen666/vue-blog-admin.git
+## 在克隆的文件夹下安装配置文件
+```
+npm install
+```
+## 运行（建议在 Vue ui 中调试运行）
+```
+// 运行项目
+npm run serve
+// 运行服务器
+npm run server
+```
