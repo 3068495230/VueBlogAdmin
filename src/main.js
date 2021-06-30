@@ -2,7 +2,7 @@
  * @Description: 项目配置
  * @Author: CY小尘s
  * @Date: 2021-04-11 17:46:07
- * @LastEditTime: 2021-06-08 23:22:16
+ * @LastEditTime: 2021-06-30 11:38:01
  * @LastEditors: 学习
  */
 import Vue from "vue";
@@ -13,9 +13,6 @@ import store from "./store";
 import ElementUI from 'element-ui';
 import 'element-ui/lib/theme-chalk/index.css';
 Vue.use(ElementUI);
-// 引入 axios
-import axios from './http/http.js'
-Vue.prototype.$http = axios
 // 引入富文本组件
 import  VueQuillEditor from 'vue-quill-editor'
 import 'quill/dist/quill.core.css'

@@ -2,7 +2,7 @@
  * @Description: 弹框编辑组件
  * @Author: CY小尘s
  * @Date: 2021-06-29 12:00:50
- * @LastEditTime: 2021-06-29 23:02:06
+ * @LastEditTime: 2021-06-30 16:41:51
  * @LastEditors: 学习
 -->
 <template>
@@ -79,23 +79,9 @@ export default {
         editorTrue(formName){
             this.$refs[formName].validate((valid) => {
                 if (valid) {
-                    const data = {
-                        title: this.ruleForm.title,
-                        classify: this.ruleForm.region,
-                        content: this.ruleForm.content,
-                    }
-                    // 获取 id
-                    let id = this.editorContent.id
-                    // 通过 id 修改
-                    this.$http.patch(`blog/${id}`, data).then(res => {
-                        // 刷新页面
-                        location.reload()
-                        this.$message({
-                            message: '修改成功！',
-                            type: 'success'
-                        })
-                    }, err => {
-                        console.log(err)
+                    this.$message({
+                        message: 'dev 分支是木有编辑功能滴哦！',
+                        type: 'info'
                     })
                 }else{
                     this.$message.error('修改出错!')

@@ -32,60 +32,59 @@ export default {
     methods:{
         // 切换权限验证信息
         permissions(value){
+            // 判断是否等于超级管理员
             if(value == 0){
                 // 判断是否不用切换
                 if(this.root == value){
-                    alert('已切换！')
+                    this.$message({
+                        type: 'error',
+                        message: '已切换!'
+                    })
                     return false
                 }
-                this.$http.get(`/user?name=admin`).then(res => {
-                    // 修改本地账户信息
-                    sessionStorage.setItem('account', res.data[0].account)
-                    // 修改本地权限信息
-                    sessionStorage.setItem('permissions', res.data[0].permissions)
-                    // 修改本地账户名
-                    sessionStorage.setItem('name', res.data[0].name)
-                    this.name = res.data[0].name
-                    this.root = res.data[0].permissions
-                }, err => {
-                    console.log(err)
-                })
+                // 修改本地账户信息
+                sessionStorage.setItem('account', 'admin')
+                // 修改本地权限信息
+                sessionStorage.setItem('permissions', 0)
+                // 修改本地账户名
+                sessionStorage.setItem('name', 'admin')
+                this.name = 'admin'
+                this.root = 0
+                // 判断是否是管理员
             }else if(value == 1){
                 // 判断是否不用切换
                 if(this.root == value){
-                    alert('已切换！')
+                    this.$message({
+                        type: 'error',
+                        message: '已切换!'
+                    })
                     return false
                 }
-                this.$http.get(`/user?name=achens`).then(res => {
-                    // 修改本地账户信息
-                    sessionStorage.setItem('account', res.data[0].account)
-                    // 修改本地权限信息
-                    sessionStorage.setItem('permissions', res.data[0].permissions)
-                    // 修改本地账户名
-                    sessionStorage.setItem('name', res.data[0].name)
-                    this.name = res.data[0].name
-                    this.root = res.data[0].permissions
-                }, err => {
-                    console.log(err)
-                })
+                // 修改本地账户信息
+                sessionStorage.setItem('account', 'achens')
+                // 修改本地权限信息
+                sessionStorage.setItem('permissions', 1)
+                // 修改本地账户名
+                sessionStorage.setItem('name', 'achens')
+                this.name = 'achens'
+                this.root = 1
             }else if(value == 2){
                 // 判断是否不用切换
                 if(this.root == value){
-                    alert('已切换！')
+                    this.$message({
+                        type: 'error',
+                        message: '已切换!'
+                    })
                     return false
                 }
-                this.$http.get(`/user?name=xuyunhans`).then(res => {
-                    // 修改本地账户信息
-                    sessionStorage.setItem('account', res.data[0].account)
-                    // 修改本地权限信息
-                    sessionStorage.setItem('permissions', res.data[0].permissions)
-                    // 修改本地账户名
-                    sessionStorage.setItem('name', res.data[0].name)
-                    this.name = res.data[0].name
-                    this.root = res.data[0].permissions
-                }, err => {
-                    console.log(err)
-                })
+                // 修改本地账户信息
+                sessionStorage.setItem('account', 'xuyunhans')
+                // 修改本地权限信息
+                sessionStorage.setItem('permissions', 2)
+                // 修改本地账户名
+                sessionStorage.setItem('name', 'xuyunhans')
+                this.name = 'xuyunhans'
+                this.root = 2
             }
         }
     },

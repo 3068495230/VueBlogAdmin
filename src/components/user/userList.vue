@@ -73,7 +73,7 @@
                 align="center">
                 <template slot-scope="scope">
                   <el-button type="text"
-                    @click.native.prevent="del(scope.row)">删除</el-button>
+                    @click.native.prevent="del(scope)">删除</el-button>
                 </template>
             </el-table-column>
           </el-table>
@@ -113,36 +113,7 @@ export default {
     data() {
       return {
         // 表格默认内容
-        tableData: [
-          {
-            id: 1,
-            name: '王小虎',
-            account: 123123123,
-            content: 'nih12312312331221ao',
-            date: '2016-05-02'
-          },
-          {
-            id: 2,
-            name: '王小虎',
-            content: 'nihao',
-            account: 123123123,
-            date: '2016-05-02'
-          },
-          {
-            id: 3,
-            name: '王小虎',
-            content: 'nihao',
-            account: 123123123,
-            date: '2016-05-02'
-          },
-          {
-            id: 4,
-            name: '王小虎',
-            account: 123123123,
-            content: 'nihao',
-            date: '2016-05-02'
-          }
-        ],
+        tableData: '',
         // 页数为 1 时是否隐藏分页
         hidePage: false,
         // 总条目数
@@ -162,23 +133,46 @@ export default {
     methods: {
       // 获取分页初始化数据
       getPage(){
-        this.$http.get(`user`).then(res => {
-          // 后台 用户 总条目数
-          this.total = res.data.length
-          // 后台 用户 总页数
-          this.totalPage = Math.ceil(res.data.length / this.pageSize)
-        }, err => {
-          console.log(err)
-        })
+        // 后台 用户 总条目数
+        this.total = 3
+        // 后台 用户 总页数
+        this.totalPage = Math.ceil(3 / 10)
       },
       // 请求每页数据
       getUser(page){
-        this.$http.get(`/user?_page=${page}&_limit=${this.pageSize}`).then(res => {
-          // 获取到 blog 列表
-          this.tableData = res.data
-        }, err => {
-          console.log(err)
-        })
+        // 获取到用户列表
+        this.tableData =  [
+          {
+            "id": 0,
+            "name": "admin",
+            "account": "admin",
+            "password": "123456",
+            "email": "3068495230@qq.com",
+            "phone": "13873478699",
+            "date": "2021-6-28",
+            "permissions": 0
+          },
+          {
+            "id": 1,
+            "name": "achens",
+            "account": "achens",
+            "email": "266858594@qq.com",
+            "phone": "15572986968",
+            "password": 3068495230,
+            "date": "2021-6-28",
+            "permissions": 1
+          },
+          {
+            "id": 2,
+            "name": "一切无所谓",
+            "account": "1115894132",
+            "password": "123456",
+            "email": "115892630@qq.com",
+            "phone": "18873427078",
+            "date": "2021-6-28",
+            "permissions": 2
+          }
+        ]
       },
       // 页码发生变化时
       handleCurrentChange(page){
@@ -186,11 +180,11 @@ export default {
       },
       // 获取上一页数据
       prev(page){
-        this.getBlog(page)
+        this.getUser(page)
       },
       // 获取下一页数据
       next(page){
-        this.getBlog(page)
+        this.getUser(page)
       },
       // 进入编辑用户
       editor(index){
@@ -210,13 +204,8 @@ export default {
             type: 'success',
             message: '删除成功!'
           })
-          // 发送删除请求
-          this.$http.delete(`user/${index.id}`).then(res => {
-            // 删除完成后刷新页面
-            location.reload()
-          }, err => {
-            console.log(err)
-          })
+          // 删除
+          this.tableData.splice(index.$index, 1)
         }).catch(() => {
           this.$message({
             type: 'info',

@@ -19,7 +19,7 @@
             <p>昵称：</p>
           </el-col>
           <el-col :span="1">
-            <span :style="name == '网络错误' ? 'color:red' : ''">{{ name }}</span>
+            <span :style="name == '网络错误' ? 'display: block; color: red; width: 70px;' : ''">{{ name }}</span>
           </el-col>
         </el-row>
         <!-- 账号 -->
@@ -28,7 +28,7 @@
             <p>账号：</p>
           </el-col>
           <el-col :span="1">
-            <span :style="name == '网络错误' ? 'color:red' : ''">{{ account }}</span>
+            <span :style="account == '网络错误' ? 'display: block; color: red; width: 70px;' : ''">{{ account }}</span>
           </el-col>
         </el-row>
         <!-- 邮箱 -->
@@ -37,7 +37,16 @@
             <p>邮箱：</p>
           </el-col>
           <el-col :span="1">
-            <span :style="name == '网络错误' ? 'color:red' : ''">{{ email }}</span>
+            <template>
+              <el-popover
+                placement="top-start"
+                title="提示"
+                width="200"
+                trigger="hover"
+                content="dev 分支没有本地缓存邮箱信息哦">
+                <span slot="reference" :style="email == '网络错误' ? 'display: block; color: red; width: 70px;' : ''">{{ email }}</span>
+              </el-popover>
+            </template>
           </el-col>
         </el-row>
         <!-- 手机号 -->
@@ -46,14 +55,23 @@
             <p>手机号：</p>
           </el-col>
           <el-col :span="1">
-            <span :style="name == '网络错误' ? 'color:red' : ''">{{ phone }}</span>
+            <template>
+              <el-popover
+                placement="top-start"
+                title="提示"
+                width="200"
+                trigger="hover"
+                content="dev 分支没有本地缓存手机号码信息哦">
+                <span slot="reference" :style="phone == '网络错误' ? 'display: block; color: red; width: 70px;' : ''">{{ phone }}</span>
+              </el-popover>
+            </template>
           </el-col>
         </el-row>
         <!-- 注销 -->
         <el-row>
           <el-col :span="3">
             <!-- 退出登录 -->
-            <el-button type="primary" @click="goBack">退出</el-button>
+            <el-button type="primary" @click="goBack()">退出</el-button>
           </el-col>
         </el-row>
       </el-tab-pane>
@@ -200,28 +218,14 @@ export default {
       submitPassWord(formName) {
         this.$refs[formName].validate((valid) => {
           if(valid){
-            // 获取存储在本地的账户
-            let account = sessionStorage.getItem('account')
-            // 先发送请求获取用户的 id
-            this.$http.get(`/user?account=${account}`).then(res => {
-              let id = res.data[0].id
-              // 拿到要修改的密码
-              let data = {
-                password: this.ruleForm.checkPass
-              }
-              // 发送修改请求
-              this.$http.patch(`/user/${id}`, data).then(res => {
-                alert('修改成功！')
-                // 清空输入框内容
-                this.$refs[formName].resetFields()
-              }, err => {
-                console.log(err)
-              })
-            }, err => {
-              console.log(err)
+            this.$message({
+                message: 'dev 分支是木有编辑功能滴哦！',
+                type: 'info'
             })
+            // 清空输入框内容
+            this.$refs[formName].resetFields()
           }else{
-            alert('密码修改失败')
+            a
             console.log('error submit!!')
             return false
           }
@@ -235,25 +239,9 @@ export default {
       submitEmail(formName) {
         this.$refs[formName].validate((valid) => {
           if (valid) {
-            // 获取存储在本地的账户
-            let account = sessionStorage.getItem('account')
-            // 先发送请求获取用户的 id
-            this.$http.get(`/user?account=${account}`).then(res => {
-              let id = res.data[0].id
-              // 拿到要修改的密码
-              let data = {
-                email: this.ruleForm.buyerEmail
-              }
-              // 发送修改请求
-              this.$http.patch(`/user/${id}`, data).then(res => {
-                alert('修改成功！')
-                // 清空输入框内容
-                this.$refs[formName].resetFields()
-              }, err => {
-                console.log(err)
-              })
-            }, err => {
-              console.log(err)
+            this.$message({
+                message: 'dev 分支是木有编辑功能滴哦！',
+                type: 'info'
             })
           }else{
             alert('邮箱修改失败')
@@ -266,25 +254,9 @@ export default {
       submitPhone(formName) {
         this.$refs[formName].validate((valid) => {
           if (valid) {
-            // 获取存储在本地的账户
-            let account = sessionStorage.getItem('account')
-            // 先发送请求获取用户的 id
-            this.$http.get(`/user?account=${account}`).then(res => {
-              let id = res.data[0].id
-              // 拿到要修改的密码
-              let data = {
-                phone: this.ruleForm.buyerPhone
-              }
-              // 发送修改请求
-              this.$http.patch(`/user/${id}`, data).then(res => {
-                alert('修改成功！')
-                // 清空输入框内容
-                this.$refs[formName].resetFields()
-              }, err => {
-                console.log(err)
-              })
-            }, err => {
-              console.log(err)
+            this.$message({
+                message: 'dev 分支是木有编辑功能滴哦！',
+                type: 'info'
             })
           }else{
             alert('手机号修改失败')
@@ -295,25 +267,27 @@ export default {
       },
       // 注销账号（退出登录）
       goBack(){
+        this.$confirm('确定要退出吗?', '提示', {
+          confirmButtonText: '确定',
+          cancelButtonText: '取消',
+          type: 'warning'
+        }).then(() => {
           // 跳转到登录页面
           this.$router.push('/login')
           // 移除保存本地的 用户信息
           sessionStorage.removeItem('account')
+          this.$message({
+            type: 'info',
+            message: '已退出...'
+          })
+        })
       },
       // 获取当前登录者信息
       getUser(){
         // 获取存储在本地的账户
-        let user = sessionStorage.getItem('account')
-        // 通过本地的账户请求后台
-        this.$http.get(`/user?account=${user}`).then(res => {
-          // 拿到后台数据后进行赋值
-          this.name = res.data[0].name
-          this.account = res.data[0].account
-          this.email = res.data[0].email
-          this.phone = res.data[0].phone
-        }, err => {
-          console.log(err)
-        })
+        this.account = sessionStorage.getItem('account')
+        // 获取名称
+        this.name = sessionStorage.getItem('name')
       }
     },
     mounted(){

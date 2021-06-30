@@ -2,7 +2,7 @@
  * @Description: 文件描述
  * @Author: CY小尘s
  * @Date: 2021-04-11 17:46:07
- * @LastEditTime: 2021-04-13 10:04:30
+ * @LastEditTime: 2021-06-30 11:40:22
  * @LastEditors: 学习
 -->
 <template>
@@ -26,7 +26,7 @@ export default {
 }
 #app{
   width: 100%;
-  height: 100vh;
+  height: 100%;
 }
 .active:focus{
     color: red;

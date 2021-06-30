@@ -1,3 +1,10 @@
+<!--
+ * @Description:  404 页面丢失错误
+ * @Author: CY小尘s
+ * @Date: 2021-06-30 11:17:01
+ * @LastEditTime: 2021-06-30 16:53:58
+ * @LastEditors: 学习
+-->
 <template>
     <div class="error404">
         <p>404</p>
@@ -23,7 +30,7 @@ export default {
     font-style: oblique;
     p:last-child{
         position: relative;
-        top: -430px;
+        top: -550px;
         font-size: 20px;
     }
 }

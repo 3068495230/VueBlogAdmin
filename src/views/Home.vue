@@ -2,7 +2,7 @@
  * @Description: 首页
  * @Author: CY小尘s
  * @Date: 2021-04-13 09:50:37
- * @LastEditTime: 2021-06-29 10:46:22
+ * @LastEditTime: 2021-06-30 17:49:59
  * @LastEditors: 学习
 -->
 <template>
@@ -50,10 +50,20 @@ export default {
   methods: {
       // 退出登录
       goBack(){
+        this.$confirm('确定要退出吗?', '提示', {
+          confirmButtonText: '确定',
+          cancelButtonText: '取消',
+          type: 'warning'
+        }).then(() => {
           // 跳转到登录页面
           this.$router.push('/login')
           // 移除保存本地的 用户信息
           sessionStorage.removeItem('account')
+          this.$message({
+            type: 'info',
+            message: '已退出...'
+          })
+        })
       }
   },
 }

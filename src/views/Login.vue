@@ -2,7 +2,7 @@
  * @Description: 登录页
  * @Author: CY小尘s
  * @Date: 2021-04-11 17:46:07
- * @LastEditTime: 2021-06-29 10:47:23
+ * @LastEditTime: 2021-06-30 17:04:00
  * @LastEditors: 学习
 -->
 <template>
@@ -16,7 +16,7 @@
       </el-form-item>
       <!-- 验证密码 -->
       <el-form-item label="密码" prop="password">
-        <el-input type="password" v-model="ruleForm.password"></el-input>
+        <el-input type="password" v-model="ruleForm.password" @keyup.enter.native="login()"></el-input>
       </el-form-item>
       <!-- 登录按钮 -->
       <el-form-item>
@@ -52,6 +52,33 @@ export default {
           { required: true, message: '请输入密码', trigger: 'blur' },
           { min: 6, max: 11, message: '长度在 6 到 11 个字符', trigger: 'blur' }
         ]
+      },
+      // 本地账户信息
+      user: {
+        admin: [
+          {
+            account: 'admin',
+            name: 'admin',
+            password: 123456,
+            permissions: 0
+          }
+        ],
+        achens: [
+          {
+            account: 'achens',
+            name: 'achens',
+            password: 3068495230,
+            permissions: 1
+          }
+        ],
+        xuyunhans: [
+          {
+            account: 'xuyunhans',
+            name: 'xuyunhans',
+            password: 3068495230,
+            permissions: 2
+          }
+        ]
       }
     }
   },
@@ -61,36 +88,54 @@ export default {
     login(){
       // 判断输入是否为空
       if(this.ruleForm.account == '' || this.ruleForm.password == ''){
-        alert('账号或密码不能为空！')
-        return
+        this.$message({
+            message: '账号或密码不能为空！',
+            type: 'error'
+        })
+        return false
       }
-      // 发送请求
-      this.$http.get(`/user?account=${this.ruleForm.account}`).then(res => {
-        // 确认请求完全成功在进行下一步操作
-        if(res.statusText == 'OK' && res.status == 200){
-          // 使用解构赋值拿到数据
-          var {account, password, permissions, name} = res.data[0]
-          // 判断账密是否正确
-          if(this.ruleForm.account == account && this.ruleForm.password == password){
-            // 缓存本地账户信息
-            sessionStorage.setItem('account', account)
-            // 缓存本地账户名
-            sessionStorage.setItem('name', name)
-            // 缓存权限信息
-            sessionStorage.setItem('permissions', permissions)
-            // 权限判断
-            if(permissions == 2){
-              alert('权限不够！无法登录...')
-              return false
-            }
-            // 并跳转到首页
-            this.$router.push('/home')
-            return
-          }
-          alert('账号或密码错误')
+      // 判断是否是普通用户登录
+      if(this.ruleForm.account == this.user.xuyunhans[0].account){
+        this.$message({
+            message: '权限不够！无法登陆...',
+            type: 'error'
+        })
+        return false
+      }
+      // 判断账号或密码是否正确
+      if(this.ruleForm.account == this.user.admin[0].account){
+        if(this.ruleForm.password == this.user.admin[0].password){
+          // 缓存本地账户信息
+          sessionStorage.setItem('account', this.user.admin[0].account)
+          // 缓存本地账户名
+          sessionStorage.setItem('name', this.user.admin[0].name)
+          // 缓存权限信息
+          sessionStorage.setItem('permissions', this.user.admin[0].permissions)
+          // 并跳转到首页
+          this.$router.push('/home')
+          return
         }
-      }, err => {
-        console.log('请求出错！', err)
+        this.$message({
+            message: '账号或密码错误！',
+            type: 'error'
+        })
+            // 判断是否是 achens 账号登录
+      }else if(this.ruleForm.account == this.user.achens[0].account){
+        if(this.ruleForm.password == this.user.achens[0].password){
+          // 缓存本地账户信息
+          sessionStorage.setItem('account', this.user.achens[0].account)
+          // 缓存本地账户名
+          sessionStorage.setItem('name', this.user.achens[0].name)
+          // 缓存权限信息
+          sessionStorage.setItem('permissions', this.user.achens[0].permissions)
+          // 并跳转到首页
+          this.$router.push('/home')
+          return
+        }
+      }
+      this.$message({
+          message: '账号或密码错误！',
+          type: 'error'
       })
     }
   }

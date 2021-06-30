@@ -140,32 +140,15 @@ export default {
     addAccount(formName){
       this.$refs[formName].validate((valid) => {
         if(valid){
-          const data = {
-              name: this.ruleForm.name,
-              account: this.ruleForm.account,
-              password: this.ruleForm.passwords,
-              email: this.ruleForm.email,
-              phone: this.ruleForm.phone,
-              date: time.newDate(),
-              permissions: this.ruleForm.permissions
-          }
-          // 发送请求
-          this.$http.post('user', data).then(res => {
-            this.$message({
-              message: '添加成功！',
-              type: 'success'
-            })
-            // 清空输入框内容
-            this.$refs[formName].resetFields()
-          }, err => {
-            this.$message({
-              message: '添加成功！',
-              type: 'error'
-            })
+          this.$message({
+              message: 'dev 分支没有后台哦！无法添加新用户...',
+              type: 'info'
           })
         }else{
-
-          return false
+          this.$message({
+            message: '验证失败...',
+            type: 'error'
+          })
         }
       })
     }

@@ -45,7 +45,7 @@
                     <!-- 删除按钮，使用插槽将对应行的数据信息传过去 -->
                     <template slot-scope="scope">
                       <el-button type="text" size="small"
-                        @click.native.prevent="del(scope.row)">删除</el-button>
+                        @click.native.prevent="del(scope)">删除</el-button>
                     </template>
                 </el-table-column>
             </el-table>
@@ -78,15 +78,48 @@ export default {
     methods: {
         // 获取分类信息
         getClassify(){
-          this.$http.get('/classify').then(res => {
-            const arr = []
-            for(let i in res.data){
-              arr.push({id: res.data[i].id ,name: res.data[i].name})
-            }
-            this.tableData = arr
-          }, err => {
-            console.log(err)
-          })
+            this.tableData = [
+              {
+                "name": "Vue",
+                "id": 1
+              },
+              {
+                "name": "ES6",
+                "id": 2
+              },
+              {
+                "name": "TS",
+                "id": 3
+              },
+              {
+                "name": "Webpack",
+                "id": 4
+              },
+              {
+                "name": "PHP",
+                "id": 5
+              },
+              {
+                "name": "MySql",
+                "id": 6
+              },
+              {
+                "name": "HTML",
+                "id": 7
+              },
+              {
+                "name": "CSS",
+                "id": 8
+              },
+              {
+                "name": "ｕｎｉ．ａｐｐｓ",
+                "id": 9
+              },
+              {
+                "name": "ES",
+                "id": 10
+              }
+            ]
         },
         // 添加分类
         add(formName){
@@ -97,17 +130,14 @@ export default {
             })
             return false
           }
-          const data = {
-            name: this.ruleForm.classifyName
-          }
-          this.$http.post('classify', data).then(res => {
-            // 清空表单内容
-            this.$refs[formName].resetFields()
-            // 获取最新分类信息
-            this.getClassify()
-          }, err => {
-            console.log(err)
+          // 添加
+          this.tableData.push({id: this.tableData.length , name: this.ruleForm.classifyName})
+          this.$message({
+            message: '添加成功！',
+            type: 'success'
           })
+          // 清空表单内容
+          this.$refs[formName].resetFields()
         },
         // 编辑分类
         editor(index){
@@ -116,19 +146,8 @@ export default {
               cancelButtonText: '取消',
             }).then((value) => {
                 this.$message({
-                  type: 'success',
-                  message: '已成功修改'
-                })
-                // 取得输入的值
-                const data = {
-                  name: value.value
-                }
-                // 发送修改请求
-                this.$http.put(`classify/${index.id}`, data).then(res => {
-                  // 修改完成后获取最新数据
-                  this.getClassify()
-                }, err => {
-                  console.log(err)
+                  type: 'info',
+                  message: 'dev 分支没有后台是无法修改的哦！'
                 })
             }).catch(() => {
                 this.$message({
@@ -148,13 +167,7 @@ export default {
               type: 'success',
               message: '删除成功!'
             })
-            // 发送删除请求
-            this.$http.delete(`classify/${index.id}`).then(res => {
-              // 获取最新分类信息
-              this.getClassify()
-            }, err => {
-              console.log(err)
-            })
+            this.tableData.splice(index.$index, 1)
           }).catch(() => {
             this.$message({
               type: 'info',
