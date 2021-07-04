@@ -308,6 +308,16 @@ export default {
         },
         // 添加 TodoList 项
         addItem(){
+            // 获取当前权限
+            let permissions = sessionStorage.getItem('permissions')
+            // 判断是否有权限进行操作
+            if(permissions != 2){
+                this.$message({
+                    type: 'error',
+                    message: '无权限操作！'
+                })
+                return false
+            }
             this.$prompt('请输入内容', '提示', {
                 confirmButtonText: '添加',
                 cancelButtonText: '取消',
@@ -330,6 +340,16 @@ export default {
         },
         // 删除 TodoList 项
         removeItem(item){
+            // 获取当前权限
+            let permissions = sessionStorage.getItem('permissions')
+            // 判断是否有权限进行操作
+            if(permissions != 2){
+                this.$message({
+                    type: 'error',
+                    message: '无权限操作！'
+                })
+                return false
+            }
             this.TodoList.splice(item, 1)
         },
         // 对展示项进行筛选

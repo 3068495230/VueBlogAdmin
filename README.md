@@ -52,5 +52,6 @@ git clone https://gitee.com/qingchen666/vue-blog-admin.git
 npm install
 ```
 ## 运行（建议在 Vue ui 中调试运行）
+```
 npm run serve
 ```
