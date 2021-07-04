@@ -194,6 +194,16 @@ export default {
       },
       // 进入编辑用户
       editor(index){
+        // 获取当前权限
+        let permissions = sessionStorage.getItem('permissions')
+        // 判断是否有权限进行操作
+        if(permissions != 2){
+            this.$message({
+                type: 'error',
+                message: '无权限操作！'
+            })
+            return false
+        }
         // 显示弹框
         this.dialogShow = true
         // 将用户信息传给编辑框
@@ -201,6 +211,16 @@ export default {
       },
       // 删除
       del(index){
+        // 获取当前权限
+        let permissions = sessionStorage.getItem('permissions')
+        // 判断是否有权限进行操作
+        if(permissions != 2){
+            this.$message({
+                type: 'error',
+                message: '无权限操作！'
+            })
+            return false
+        }
         this.$confirm('是否删除用户?', '提示', {
           confirmButtonText: '确定',
           cancelButtonText: '取消',

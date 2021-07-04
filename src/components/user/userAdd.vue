@@ -138,6 +138,16 @@ export default {
   methods:{
     // 添加账号
     addAccount(formName){
+      // 获取当前权限
+      let permissions = sessionStorage.getItem('permissions')
+      // 判断是否有权限进行操作
+      if(permissions != 2){
+          this.$message({
+              type: 'error',
+              message: '无权限操作！'
+          })
+          return false
+      }
       this.$refs[formName].validate((valid) => {
         if(valid){
           const data = {
@@ -171,7 +181,19 @@ export default {
         }
       })
     }
-  }
+  },
+  mounted(){
+    // 获取当前权限
+    let permissions = sessionStorage.getItem('permissions')
+    // 判断是否有权限进行操作
+    if(permissions != 2){
+        this.$message({
+            type: 'info',
+            message: '当前账户是无法添加账号的哦'
+        })
+        return false
+    }
+  },
 }
 </script>
 

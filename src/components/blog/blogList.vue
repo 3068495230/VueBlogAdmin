@@ -2,7 +2,7 @@
  * @Description: 文件描述
  * @Author: CY小尘s
  * @Date: 2021-06-26 15:10:04
- * @LastEditTime: 2021-06-30 11:07:51
+ * @LastEditTime: 2021-07-04 11:40:03
  * @LastEditors: 学习
 -->
 <template>
@@ -195,6 +195,16 @@ export default {
       },
       // 进入编辑文章
       editor(index){
+        // 获取当前权限
+        let permissions = sessionStorage.getItem('permissions')
+        // 判断是否有权限进行操作
+        if(permissions != 2){
+            this.$message({
+                type: 'error',
+                message: '无权限操作！'
+            })
+            return false
+        }
         // 显示弹框
         this.dialogShow = true
         // 将博客内容传给编辑框
@@ -202,6 +212,16 @@ export default {
       },
       // 删除
       del(index){
+        // 获取当前权限
+        let permissions = sessionStorage.getItem('permissions')
+        // 判断是否有权限进行操作
+        if(permissions != 2){
+            this.$message({
+                type: 'error',
+                message: '无权限操作！'
+            })
+            return false
+        }
         this.$confirm('是否删除文章?', '提示', {
           confirmButtonText: '确定',
           cancelButtonText: '取消',

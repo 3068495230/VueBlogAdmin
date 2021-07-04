@@ -115,6 +115,16 @@ export default {
         },
         // 编辑分类
         editor(index){
+          // 获取当前权限
+          let permissions = sessionStorage.getItem('permissions')
+          // 判断是否有权限进行操作
+          if(permissions != 2){
+              this.$message({
+                  type: 'error',
+                  message: '无权限操作！'
+              })
+              return false
+          }
           this.$prompt('编辑分类', '提示', {
               confirmButtonText: '确认',
               cancelButtonText: '取消',
@@ -143,6 +153,16 @@ export default {
         },
         // 删除分类
         del(index){
+          // 获取当前权限
+          let permissions = sessionStorage.getItem('permissions')
+          // 判断是否有权限进行操作
+          if(permissions != 2){
+              this.$message({
+                  type: 'error',
+                  message: '无权限操作！'
+              })
+              return false
+          }
           this.$confirm('是否删除分类?', '提示', {
             confirmButtonText: '确定',
             cancelButtonText: '取消',
